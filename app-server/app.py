@@ -1,12 +1,10 @@
-from flask import Flask
-
-app = Flask(__name__)
+from api import app, db
 
 
-@app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World!'
+@app.shell_context_processor
+def make_shell_context():
+    return {'db': db, 'app': app}
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
