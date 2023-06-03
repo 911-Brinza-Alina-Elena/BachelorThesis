@@ -20,15 +20,17 @@ import { ActionButton, ChoiceGroup, DatePicker, DefaultButton, IChoiceGroupOptio
 import { loginUser, registerUser } from "../../services/auth-service";
 import { FONT_FAMILY } from "../../constants";
 import User from "../../models/user";
+import { useNavigate } from "react-router-dom";
 
 
 export const LoginRegisterComponent = () => {
+  const navigate = useNavigate();
   const [isRegister, setIsRegister] = React.useState<boolean>(false); 
   const [username, setUsername] = React.useState<string>(""); 
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [confirmPassword, setConfirmPassword] = React.useState<string>("");
-  const [typeOfUser, setTypeOfUser] = React.useState<string>("pacient");
+  const [typeOfUser, setTypeOfUser] = React.useState<string>("");
   const [firstName, setFirstName] = React.useState<string>("");
   const [lastName, setLastName] = React.useState<string>("");
   const [dateOfBirth, setDateOfBirth] = React.useState<Date>(new Date());
@@ -37,6 +39,17 @@ export const LoginRegisterComponent = () => {
   const [city, setCity] = React.useState<string>("");
   const [therapistSpecialty, setTherapistSpecialty] = React.useState<string>("");
   const [therapistLocation, setTherapistLocation] = React.useState<string>("");
+
+  const [loginError, setLoginError] = React.useState<string>("");
+  const [usernameError, setUsernameError] = React.useState<string>("");
+  const [emailError, setEmailError] = React.useState<string>("");
+  const [passwordError, setPasswordError] = React.useState<string>("");
+  const [confirmPasswordError, setConfirmPasswordError] = React.useState<string>("");
+  const [firstNameError, setFirstNameError] = React.useState<string>("");
+  const [lastNameError, setLastNameError] = React.useState<string>("");
+  const [genderError, setGenderError] = React.useState<string>("");
+  const [countryError, setCountryError] = React.useState<string>("");
+  const [cityError, setCityError] = React.useState<string>("");
 
   const resetStates = () => {
     setUsername("");
@@ -58,10 +71,6 @@ export const LoginRegisterComponent = () => {
     { key: 'patient', text: 'Patient' },
     { key: 'therapist', text: 'Therapist' },
   ];
-
-  const onFormatDate = (date?: Date): string => {
-    return !date ? '' : date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear() % 100);
-  };
 
   const onChangeUsername = React.useCallback(
     (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
@@ -154,11 +163,65 @@ export const LoginRegisterComponent = () => {
     []
   );
 
+  const validateRegisterInputs = () => {
+    // check if the inputs are empty and if they have the required length
+    if (username.length < 3) {
+      setUsernameError("Username must be at least 3 characters long!");
+      return false;
+    }
+    if (email.length < 3) {
+      setEmailError("Email must be at least 3 characters long!");
+      return false;
+    }
+    if (password.length < 3) {
+      setPasswordError("Password must be at least 3 characters long!");
+      return false;
+    }
+    if (confirmPassword.length < 3) {
+      setConfirmPasswordError("Password must be at least 3 characters long!");
+      return false;
+    }
+    if (firstName.length < 3) {
+      setFirstNameError("First name must be at least 3 characters long!");
+      return false;
+    }
+    if (lastName.length < 3) {
+      setLastNameError("Last name must be at least 3 characters long!");
+      return false;
+    }
+    if (gender.length < 3) {
+      setGenderError("Gender must be at least 3 characters long!");
+      return false;
+    }
+    if (country.length < 3) {
+      setCountryError("Country must be at least 3 characters long!");
+      return false;
+    }
+    if (city.length < 3) {
+      setCityError("City must be at least 3 characters long!");
+      return false;
+    }
+    return true;
+  };
+
   const sendToRegister = () => {
     if (password !== confirmPassword) {
       alert("Passwords don't match!");
       return;
     } 
+    else if (!validateRegisterInputs()) {
+      alert("Invalid inputs!");
+      return;
+    }
+    setUsernameError("");
+    setEmailError("");
+    setPasswordError("");
+    setConfirmPasswordError("");
+    setFirstNameError("");
+    setLastNameError("");
+    setGenderError("");
+    setCountryError("");
+    setCityError("");
     if (typeOfUser === "patient") {
       let user: User = {
         username: username,
@@ -197,6 +260,35 @@ export const LoginRegisterComponent = () => {
     }
   };
 
+  const sendToLogin = () => {
+    loginUser(email, password)
+      .then((response) => {
+        console.log(response);
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("userType", response.user.type_of_account);
+        localStorage.setItem("email", response.user.email);
+        setLoginError("");
+        navigate("/" + response.user.type_of_account);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoginError(error);
+      });
+  };
+
+  const setEmptyErrorStates = () => {
+    setLoginError("");
+    setUsernameError("");
+    setEmailError("");
+    setPasswordError("");
+    setConfirmPasswordError("");
+    setFirstNameError("");
+    setLastNameError("");
+    setGenderError("");
+    setCountryError("");
+    setCityError("");
+  }
+
   return (
     <>
       {!isRegister ? (
@@ -220,6 +312,8 @@ export const LoginRegisterComponent = () => {
                 styles={LoginInputStyle}
                 value={email}
                 onChange={onChangeEmail}
+                required
+                errorMessage={loginError}
               />
             </div>
             <div>
@@ -234,18 +328,21 @@ export const LoginRegisterComponent = () => {
                 styles={LoginInputStyle}
                 value={password}
                 onChange={onChangePassword}
+                required
+                errorMessage={loginError}
               />
             </div>
             <DefaultButton
               text="Sign In"
               className={LoginRegisterButtonStyle}
-              onClick={() => loginUser(email, password)}
+              onClick={() => sendToLogin()}
             />
             <p>
               Don't have an account?{" "}
               <ActionButton
                 className={SignUpActionButtonStyle}
                 onClick={() => {
+                  setEmptyErrorStates();
                   setIsRegister(true);
                   resetStates();
                 }}
@@ -270,6 +367,8 @@ export const LoginRegisterComponent = () => {
                   styles={RegisiterInputStyle}
                   value={username}
                   onChange={onChangeUsername}
+                  required
+                  errorMessage={usernameError}
                 />
               </div>
               <div>
@@ -282,6 +381,8 @@ export const LoginRegisterComponent = () => {
                   styles={RegisiterInputStyle}
                   value={email}
                   onChange={onChangeEmail}
+                  required
+                  errorMessage={emailError}
                 />
               </div>
               <div>
@@ -296,6 +397,8 @@ export const LoginRegisterComponent = () => {
                   styles={RegisiterInputStyle}
                   value={password}
                   onChange={onChangePassword}
+                  required
+                  errorMessage={passwordError}
                 />
               </div>
               <div>
@@ -313,6 +416,8 @@ export const LoginRegisterComponent = () => {
                   styles={RegisiterInputStyle}
                   value={confirmPassword}
                   onChange={onChangeConfirmPassword}
+                  required
+                  errorMessage={confirmPasswordError}
                 />
               </div>
             </div>
@@ -335,6 +440,7 @@ export const LoginRegisterComponent = () => {
                       fontFamily: FONT_FAMILY
                     }
                   }} }}
+                  required
                 />
               </div>
               <div>
@@ -350,6 +456,8 @@ export const LoginRegisterComponent = () => {
                   styles={RegisiterInputStyle}
                   value={firstName}
                   onChange={onChangeFirstName}
+                  required
+                  errorMessage={firstNameError}
                 />
               </div>
               <div>
@@ -362,6 +470,8 @@ export const LoginRegisterComponent = () => {
                   styles={RegisiterInputStyle}
                   value={lastName}
                   onChange={onChangeLastName}
+                  required
+                  errorMessage={lastNameError}
                 />
               </div>
               <div>
@@ -373,6 +483,7 @@ export const LoginRegisterComponent = () => {
                   styles={RegisiterInputStyle}
                   value={dateOfBirth}
                   onSelectDate={onChangeDateOfBirth}
+                  isRequired={true}
                 />
 
               </div>
@@ -391,6 +502,8 @@ export const LoginRegisterComponent = () => {
                   styles={RegisiterInputStyle}
                   value={gender}
                   onChange={onChangeGender}
+                  required
+                  errorMessage={genderError}
                 />
               </div>
               <div>
@@ -406,6 +519,8 @@ export const LoginRegisterComponent = () => {
                   styles={RegisiterInputStyle}
                   value={country}
                   onChange={onChangeCountry}
+                  required
+                  errorMessage={countryError}
                 />
               </div>
               <div>
@@ -413,7 +528,7 @@ export const LoginRegisterComponent = () => {
                   htmlFor="cityField"
                   styles={LoginRegisterLabelStyle}
                 >
-                  Country
+                  City
                 </Label>
                 <TextField
                   id="cityField"
@@ -421,6 +536,8 @@ export const LoginRegisterComponent = () => {
                   styles={RegisiterInputStyle}
                   value={city}
                   onChange={onChangeCity}
+                  required
+                  errorMessage={cityError}
                 />
               </div>
             </div>
@@ -463,6 +580,7 @@ export const LoginRegisterComponent = () => {
             <ActionButton
               className={SignUpActionButtonStyle}
               onClick={() => {
+                setEmptyErrorStates();
                 setIsRegister(false);
                 resetStates();
               }}

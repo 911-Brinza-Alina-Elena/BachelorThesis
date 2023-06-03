@@ -68,6 +68,7 @@ export const LoginInputStyle: Partial<ITextFieldStyles> = {
         boxShadow: "0px 0px 5px 1px rgba(0,0,0,0.15)",
         width: "20vw",
         height: "5vh",
+        minHeight:"30px",
         margin: "2vh 0 2vh 0",
         selectors: {
             ".ms-TextField-fieldGroup": {

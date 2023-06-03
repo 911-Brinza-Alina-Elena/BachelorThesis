@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="e087fff6-c976-44c1-ac75-c7b62ac2d43f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../app-frontend/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../app-frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app-frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../app-frontend/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app-frontend/src/components/login-register/login-register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../app-frontend/src/components/login-register/login-register.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app-frontend/src/services/auth-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../app-frontend/src/services/auth-service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f1c6ed5a-d34d-4f66-9893-223af3eb262c.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/f1c6ed5a-d34d-4f66-9893-223af3eb262c.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +28,17 @@
       </list>
     </option>
   </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
@@ -33,12 +48,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="DatabaseDriversLRU" value="postgresql" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RunManager" selected="Flask server.app-server">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="app-server" />
@@ -70,13 +90,15 @@
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="DB_ENGINE" value="postgresql" />
-        <env name="DB_USERNAME" value="postgres" />
-        <env name="DB_PASSWORD" value="test123" />
         <env name="DB_HOST" value="localhost" />
-        <env name="DB_PORT" value="5432" />
         <env name="DB_NAME" value="therapease" />
+        <env name="DB_PASSWORD" value="test123" />
+        <env name="DB_PORT" value="5432" />
+        <env name="DB_USERNAME" value="postgres" />
+        <env name="SECRET_KEY" value="XkraPqtOgqdoRQBDdtRaZocoS18dlnMCihXC2nvXof0cjkgFK2rApnGavCc1Hfy" />
       </envs>
       <option name="SDK_HOME" value="C:\Users\selen\AppData\Local\Programs\Python\Python311\python.exe" />
+      <option name="SDK_NAME" value="Python 3.10" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -109,7 +131,15 @@
       <workItem from="1683702316885" duration="2265000" />
       <workItem from="1684187036065" duration="42000" />
       <workItem from="1684775955661" duration="3608000" />
-      <workItem from="1684864186785" duration="2366000" />
+      <workItem from="1684864186785" duration="2825000" />
+      <workItem from="1684912849679" duration="1030000" />
+      <workItem from="1685309212535" duration="1191000" />
+      <workItem from="1685542408170" duration="96000" />
+      <workItem from="1685543313601" duration="74000" />
+      <workItem from="1685543404078" duration="1154000" />
+      <workItem from="1685657719227" duration="740000" />
+      <workItem from="1685707800593" duration="16000" />
+      <workItem from="1685794928256" duration="15717000" />
     </task>
     <servers />
   </component>
@@ -126,10 +156,9 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/app_server$app_server.coverage" NAME="app-server Coverage Results" MODIFIED="1684873575877" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/app_server$app.coverage" NAME="app Coverage Results" MODIFIED="1683664691173" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/app_server$app_server.coverage" NAME="app-server Coverage Results" MODIFIED="1685831395857" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

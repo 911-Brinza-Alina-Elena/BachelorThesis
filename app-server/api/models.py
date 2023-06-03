@@ -31,7 +31,7 @@ class User(db.Model):
         self.password = generate_password_hash(password)
 
     def check_password(self, password):
-        return self.password == password
+        return check_password_hash(self.password, password)
 
     def update_email(self, email):
         self.email = email
@@ -58,7 +58,7 @@ class User(db.Model):
         return cls.query.filter_by(email=email).first()
 
     def to_dict(self):
-        cls_dict = {'_id': self.id, 'username': self.username, 'email': self.email}
+        cls_dict = {'_id': self.id, 'username': self.username, 'email': self.email, 'type_of_account': self.type_of_account}
         return cls_dict
 
     def to_json(self):
@@ -76,3 +76,63 @@ class JWTTokenBlocklist(db.Model):
     def save(self):
         db.session.add(self)
         db.session.commit()
+
+
+class JournalEntry(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, nullable=False)
+    entry_date = db.Column(db.Date, nullable=False)
+    entry_title = db.Column(db.String(100), nullable=False)
+    entry_text = db.Column(db.Text(), nullable=False)
+    predicted_emotion = db.Column(db.String(50), nullable=True)
+
+    def __repr__(self):
+        return f'<JournalEntries {self.id}>'
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    @classmethod
+    def find_by_id(cls, entry_id):
+        return cls.query.get_or_404(entry_id)
+
+    @classmethod
+    def find_by_user_id(cls, user_id):
+        return cls.query.filter_by(user_id=user_id).all()
+
+    @classmethod
+    def find_by_entry_date(cls, entry_date):
+        return cls.query.filter_by(entry_date=entry_date).all()
+
+    @classmethod
+    def find_by_entry_title(cls, entry_title):
+        return cls.query.filter_by(entry_title=entry_title).all()
+
+    def update_entry_title(self, entry_title):
+        self.entry_title = entry_title
+
+    @classmethod
+    def find_by_entry_text(cls, entry_text):
+        return cls.query.filter_by(entry_text=entry_text).all()
+
+    def update_entry_text(self, entry_text):
+        self.entry_text = entry_text
+
+    @classmethod
+    def find_by_predicted_emotion(cls, predicted_emotion):
+        return cls.query.filter_by(predicted_emotion=predicted_emotion).all()
+
+    def update_predicted_emotion(self, predicted_emotion):
+        self.predicted_emotion = predicted_emotion
+
+    def to_dict(self):
+        cls_dict = {'_id': self.id, 'user_id': self.user_id, 'entry_date': str(self.entry_date), 'entry_title': self.entry_title, 'entry_text': self.entry_text}
+        return cls_dict
+
+    def to_json(self):
+        return self.to_dict()
