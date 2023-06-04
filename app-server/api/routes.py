@@ -5,10 +5,11 @@ import jwt as jwt
 from flask import request
 from flask_restx import Api, fields, Resource
 
+from ai_models.emotion_recognition_helpers import EmotionRecognition
 from api.config import Config
 from api.models import User, JWTTokenBlocklist, db, JournalEntry, PatientTherapistRelation
 
-
+emotion_recognition = EmotionRecognition()
 
 rest_api = Api(version='1.0', title='TherapEase REST API')
 
@@ -169,7 +170,8 @@ class Journal(Resource):
         request_data = request.get_json()
         _title = request_data.get('title')
         _content = request_data.get('content')
-        new_journal = JournalEntry(entry_title=_title, entry_text=_content, user_id=self.id, entry_date=datetime.now(timezone.utc))
+        prediction = emotion_recognition.predict(_content)
+        new_journal = JournalEntry(entry_title=_title, entry_text=_content, user_id=self.id, entry_date=datetime.now(timezone.utc), predicted_emotion=prediction)
         new_journal.save()
         return {'success': True, 'msg': 'Journal created successfully'}, 201
 
@@ -199,6 +201,7 @@ class JournalEntryRoute(Resource):
             return {'success': False, 'msg': 'Journal does not exist'}, 400
         journal.entry_title = _title
         journal.entry_text = _content
+        journal.predicted_emotion = emotion_recognition.predict(_content)
         journal.save()
         return {'success': True, 'msg': 'Journal updated successfully'}, 200
 
