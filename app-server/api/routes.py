@@ -8,6 +8,8 @@ from flask_restx import Api, fields, Resource
 from api.config import Config
 from api.models import User, JWTTokenBlocklist, db, JournalEntry, PatientTherapistRelation
 
+
+
 rest_api = Api(version='1.0', title='TherapEase REST API')
 
 login_model = rest_api.model('LoginModel', {
@@ -170,6 +172,20 @@ class Journal(Resource):
         new_journal = JournalEntry(entry_title=_title, entry_text=_content, user_id=self.id, entry_date=datetime.now(timezone.utc))
         new_journal.save()
         return {'success': True, 'msg': 'Journal created successfully'}, 201
+
+
+@rest_api.route('/api/patients/journal')
+class JournalEntryRoute(Resource):
+    @token_required
+    def get(self, current_user):
+        request_data = request.get_json()
+        _id = request_data.get('id')
+        journal = JournalEntry.find_by_id(_id)
+        if not journal:
+            return {'success': False, 'msg': 'Journal does not exist'}, 400
+        if journal.user_id != self.id:
+            return {'success': False, 'msg': 'Journal does not belong to this user'}, 400
+        return {'success': True, 'journal': journal.to_json()}, 200
 
     @token_required
     @rest_api.expect(update_journal_model, validate=True)
