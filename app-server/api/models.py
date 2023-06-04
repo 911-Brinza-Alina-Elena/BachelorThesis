@@ -33,12 +33,6 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-    def update_email(self, email):
-        self.email = email
-
-    def update_username(self, username):
-        self.username = username
-
     def check_jwt_auth_active(self):
         return self.jwt_auth_active
 
@@ -63,6 +57,23 @@ class User(db.Model):
 
     def to_json(self):
         return self.to_dict()
+
+    def get_all_details(self):
+        details = {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'type_of_account': self.type_of_account,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'date_of_birth': self.date_of_birth,
+            'gender': self.gender,
+            'country': self.country,
+            'city': self.city,
+            'therapist_speciality': self.therapist_speciality,
+            'therapist_location': self.therapist_location
+        }
+        return details
 
 
 class JWTTokenBlocklist(db.Model):
@@ -132,6 +143,42 @@ class JournalEntry(db.Model):
 
     def to_dict(self):
         cls_dict = {'_id': self.id, 'user_id': self.user_id, 'entry_date': str(self.entry_date), 'entry_title': self.entry_title, 'entry_text': self.entry_text}
+        return cls_dict
+
+    def to_json(self):
+        return self.to_dict()
+
+
+class PatientTherapistRelation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    patient_id = db.Column(db.Integer, nullable=False, unique=True)
+    therapist_id = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return f'<PatientTherapistRelation {self.id}>'
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    @classmethod
+    def find_by_id(cls, relation_id):
+        return cls.query.get_or_404(relation_id)
+
+    @classmethod
+    def find_by_patient_id(cls, patient_id):
+        return cls.query.filter_by(patient_id=patient_id).all()
+
+    @classmethod
+    def find_by_therapist_id(cls, therapist_id):
+        return cls.query.filter_by(therapist_id=therapist_id).all()
+
+    def to_dict(self):
+        cls_dict = {'_id': self.id, 'patient_id': self.patient_id, 'therapist_id': self.therapist_id}
         return cls_dict
 
     def to_json(self):

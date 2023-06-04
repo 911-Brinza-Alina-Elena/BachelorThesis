@@ -5,13 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e087fff6-c976-44c1-ac75-c7b62ac2d43f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../app-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../app-frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../app-frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app-frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../app-frontend/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app-frontend/src/components/login-register/login-register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../app-frontend/src/components/login-register/login-register.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app-frontend/src/services/auth-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../app-frontend/src/services/auth-service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f1c6ed5a-d34d-4f66-9893-223af3eb262c.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/f1c6ed5a-d34d-4f66-9893-223af3eb262c.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes.py" afterDir="false" />
@@ -140,6 +133,7 @@
       <workItem from="1685657719227" duration="740000" />
       <workItem from="1685707800593" duration="16000" />
       <workItem from="1685794928256" duration="15717000" />
+      <workItem from="1685907028620" duration="2667000" />
     </task>
     <servers />
   </component>
