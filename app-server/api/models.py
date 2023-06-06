@@ -66,7 +66,7 @@ class User(db.Model):
             'type_of_account': self.type_of_account,
             'first_name': self.first_name,
             'last_name': self.last_name,
-            'date_of_birth': self.date_of_birth,
+            'date_of_birth': str(self.date_of_birth),
             'gender': self.gender,
             'country': self.country,
             'city': self.city,
@@ -142,7 +142,7 @@ class JournalEntry(db.Model):
         self.predicted_emotion = predicted_emotion
 
     def to_dict(self):
-        cls_dict = {'_id': self.id, 'user_id': self.user_id, 'entry_date': str(self.entry_date), 'entry_title': self.entry_title, 'entry_text': self.entry_text}
+        cls_dict = {'_id': self.id, 'user_id': self.user_id, 'entry_date': str(self.entry_date), 'entry_title': self.entry_title, 'entry_text': self.entry_text, 'entry_emotion': self.predicted_emotion}
         return cls_dict
 
     def to_json(self):

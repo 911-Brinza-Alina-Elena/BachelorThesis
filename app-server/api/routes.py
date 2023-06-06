@@ -221,7 +221,11 @@ class Therapist(Resource):
     @token_required
     def get(self, current_user):
         # get all the patients of the therapist
-        patients = PatientTherapistRelation.find_by_therapist_id(self.id)
+        patient_therapist_relations = PatientTherapistRelation.find_by_therapist_id(self.id)
+        patients = []
+        for relation in patient_therapist_relations:
+            patient = User.find_by_id(relation.patient_id)
+            patients.append(patient)
         return {'success': True, 'patients': [patient.to_json() for patient in patients]}, 200
 
     @token_required
@@ -261,14 +265,20 @@ class TherapistPatient(Resource):
         patient_therapist_relation = PatientTherapistRelation.find_by_patient_id(_patient_id)
         if not patient_therapist_relation:
             return {'success': False, 'msg': 'Patient is not a patient of the therapist'}, 400
-        return {'success': True, 'patient': patient.to_json()}, 200
+        # compute list of all emotions of the journals of the patient, with the corresponding dates
+        journals = JournalEntry.find_by_user_id(_patient_id)
+        emotions = []
+        for journal in journals:
+            emotions.append({'emotion': journal.predicted_emotion, 'date': str(journal.entry_date)})
+        return {'success': True, 'patient': patient.to_json(), 'emotions': emotions}, 200
+
 
     @token_required
     def delete(self, current_user):
         # check if the patient is a patient of the therapist
         request_data = request.get_json()
         _patient_id = request_data.get('patient_id')
-        patient_therapist_relation = PatientTherapistRelation.find_by_patient_id(_patient_id)
+        patient_therapist_relation = PatientTherapistRelation.find_by_patient_id(_patient_id)[0]
         if not patient_therapist_relation:
             return {'success': False, 'msg': 'Patient is not a patient of the therapist'}, 400
         # delete the patient from the therapist
