@@ -265,8 +265,9 @@ export const LoginRegisterComponent = () => {
       .then((response) => {
         console.log(response);
         localStorage.setItem("token", response.token);
-        localStorage.setItem("userType", response.user.type_of_account);
-        localStorage.setItem("email", response.user.email);
+        localStorage.setItem("userType", response.user.type_of_account!);
+        localStorage.setItem("email", response.user.email!);
+        localStorage.setItem("username", response.user.username!);
         setLoginError("");
         navigate("/" + response.user.type_of_account);
       })

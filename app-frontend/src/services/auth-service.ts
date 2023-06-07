@@ -16,6 +16,7 @@ export const logoutUser = (): Promise<string> => {
 
     }).catch((error) => {
       console.log(error);
+      handleLogout();
       reject("An error occurred while trying to logout.");
     });
   });

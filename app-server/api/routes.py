@@ -270,7 +270,7 @@ class TherapistPatient(Resource):
         emotions = []
         for journal in journals:
             emotions.append({'emotion': journal.predicted_emotion, 'date': str(journal.entry_date)})
-        return {'success': True, 'patient': patient.to_json(), 'emotions': emotions}, 200
+        return {'success': True, 'patient': patient.get_all_details(), 'emotions': emotions}, 200
 
 
     @token_required

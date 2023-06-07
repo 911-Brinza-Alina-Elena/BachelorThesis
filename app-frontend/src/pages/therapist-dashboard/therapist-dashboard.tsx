@@ -14,7 +14,7 @@ export const TherapistDashboard = () => {
             }
         }).catch((error) => {
             console.log(error);
-            alert('There was an error logging out.');
+            navigate('/login');
         });
     };
 

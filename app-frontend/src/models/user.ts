@@ -1,9 +1,9 @@
 type User = {
     id?: number,
     username: string,
-    email: string,
+    email?: string,
     password: string,
-    type_of_account: string,
+    type_of_account?: string,
     first_name: string,
     last_name: string,
     date_of_birth: Date,
