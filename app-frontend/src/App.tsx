@@ -6,6 +6,7 @@ import { ProtectedRoute } from './utils/protected-route';
 import { PatientDashboard } from './pages/patient-dashboard/patient-dashboard';
 import { TherapistDashboard } from './pages/therapist-dashboard/therapist-dashboard';
 import { logoStyle } from './pages/login-page/login-page-style';
+import { JournalPage } from './pages/journal-page/journal-page';
 
 const App = () => {
   // logic to check if the user is a patient or therapist and if they are logged in
@@ -31,6 +32,11 @@ const App = () => {
       <Route path="/therapist" element={
         <ProtectedRoute>
           <TherapistDashboard />
+        </ProtectedRoute>
+      } />
+      <Route path='/patient/journal/:id' element={
+        <ProtectedRoute>
+          <JournalPage />
         </ProtectedRoute>
       } />
     </Routes>

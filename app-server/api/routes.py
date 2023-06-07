@@ -52,10 +52,9 @@ post_journal_model = rest_api.model('JournalModel', {
 })
 
 update_journal_model = rest_api.model('UpdateJournalModel', {
-    'id': fields.Integer(required=True),
-    'title': fields.String(required=False, min_length=4, max_length=64),
-    'content': fields.String(required=False, min_length=4, max_length=64),
-    'date': fields.Date(required=False)
+    '_id': fields.Integer(required=True),
+    'entry_title': fields.String(required=False, min_length=4, max_length=64),
+    'entry_text': fields.String(required=False, min_length=4, max_length=64)
 })
 
 
@@ -176,13 +175,11 @@ class Journal(Resource):
         return {'success': True, 'msg': 'Journal created successfully'}, 201
 
 
-@rest_api.route('/api/patients/journal')
+@rest_api.route('/api/patients/journal/<int:id>')
 class JournalEntryRoute(Resource):
     @token_required
-    def get(self, current_user):
-        request_data = request.get_json()
-        _id = request_data.get('id')
-        journal = JournalEntry.find_by_id(_id)
+    def get(self, current_user, id):
+        journal = JournalEntry.find_by_id(id)
         if not journal:
             return {'success': False, 'msg': 'Journal does not exist'}, 400
         if journal.user_id != self.id:
@@ -191,11 +188,11 @@ class JournalEntryRoute(Resource):
 
     @token_required
     @rest_api.expect(update_journal_model, validate=True)
-    def put(self, current_user):
+    def put(self, current_user, id):
         request_data = request.get_json()
-        _id = request_data.get('id')
-        _title = request_data.get('title')
-        _content = request_data.get('content')
+        _id = request_data.get('_id')
+        _title = request_data.get('entry_title')
+        _content = request_data.get('entry_text')
         journal = JournalEntry.find_by_id(_id)
         if not journal:
             return {'success': False, 'msg': 'Journal does not exist'}, 400
@@ -206,10 +203,9 @@ class JournalEntryRoute(Resource):
         return {'success': True, 'msg': 'Journal updated successfully'}, 200
 
     @token_required
-    def delete(self, current_user):
-        request_data = request.get_json()
-        _id = request_data.get('id')
-        journal = JournalEntry.find_by_id(_id)
+    def delete(self, current_user, id):
+        print(id)
+        journal = JournalEntry.find_by_id(id)
         if not journal:
             return {'success': False, 'msg': 'Journal does not exist'}, 400
         journal.delete()
