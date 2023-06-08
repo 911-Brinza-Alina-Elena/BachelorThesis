@@ -74,3 +74,21 @@ export const deleteJournal = async (token: string, id: number): Promise<string> 
         });
     });
 };
+
+export const addJournal = async (token: string, journal: Journal): Promise<string> => {
+    const headers = {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    };
+    return new Promise((resolve, reject) => {
+        axios.post(`http://127.0.0.1:5000/api/patients/journals`, journal, headers)
+        .then((response) => {
+            console.log(response);
+            resolve(response.data.msg);
+        })
+        .catch((error) => {
+            console.log(error);
+            reject("An error occurred while trying to add journal.");
+        }
+        );
+    });
+};

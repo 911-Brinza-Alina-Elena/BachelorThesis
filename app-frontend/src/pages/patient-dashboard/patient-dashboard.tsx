@@ -1,18 +1,14 @@
 // page for when a patient logs in
 
-import { DefaultButton, DocumentCard, DocumentCardActivity, DocumentCardDetails, DocumentCardTitle, DocumentCardType, IDocumentCardActivityPerson, Icon, Panel, Persona } from "@fluentui/react";
-import { LoginRegisterButtonStyle } from "../../components/login-register/login-register-style";
-import { logoutUser } from "../../services/auth-service";
-import { useNavigate } from "react-router-dom";
+import { DefaultButton, DocumentCard, DocumentCardActivity, DocumentCardDetails, DocumentCardTitle, IDocumentCardActivityPerson } from "@fluentui/react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Journal } from "../../models/journal";
 import { getJournals } from "../../services/api-service";
-import { UserPanel } from "../../components/user-panel/user-panel";
 
 export const PatientDashboard = () => {
     const navigate = useNavigate();
     const [journals, setJournals] = useState<Journal[]>([]);
-    const [showPanel, setShowPanel] = useState(false);
 
     const token = localStorage.getItem("token");
 
@@ -36,7 +32,6 @@ export const PatientDashboard = () => {
     };
 
     
-
     // get journals from database
     const getAndSetJournals = () => {
         const responseJournals = getJournals(token!);
@@ -81,7 +76,7 @@ export const PatientDashboard = () => {
                 <DefaultButton
                     iconProps={{iconName: 'Add'}}
                     text="New Journal"
-                    onClick={() => navigate('/patient/new-journal')}
+                    onClick={() => navigate('/patient/add-journal')}
                 />
             </div>
             <h2>Journals</h2>

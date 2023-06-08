@@ -3,5 +3,5 @@ export type Journal = {
     entry_title: string;
     entry_text: string;
     entry_date?: Date;
-    entry_emotion: string;
+    entry_emotion?: string;
 }

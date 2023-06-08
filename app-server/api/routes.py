@@ -47,8 +47,8 @@ update_user_model = rest_api.model('UpdateUserModel', {
 })
 
 post_journal_model = rest_api.model('JournalModel', {
-    'title': fields.String(required=True, min_length=4, max_length=64),
-    'content': fields.String(required=True, min_length=4, max_length=64)
+    'entry_title': fields.String(required=True, min_length=4, max_length=64),
+    'entry_text': fields.String(required=True, min_length=4, max_length=64)
 })
 
 update_journal_model = rest_api.model('UpdateJournalModel', {
@@ -167,8 +167,8 @@ class Journal(Resource):
     @rest_api.expect(post_journal_model, validate=True)
     def post(self, current_user):
         request_data = request.get_json()
-        _title = request_data.get('title')
-        _content = request_data.get('content')
+        _title = request_data.get('entry_title')
+        _content = request_data.get('entry_text')
         prediction = emotion_recognition.predict(_content)
         new_journal = JournalEntry(entry_title=_title, entry_text=_content, user_id=self.id, entry_date=datetime.now(timezone.utc), predicted_emotion=prediction)
         new_journal.save()
