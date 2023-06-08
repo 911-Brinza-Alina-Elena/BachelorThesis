@@ -35,7 +35,6 @@ register_model = rest_api.model('RegisterModel', {
 
 update_user_model = rest_api.model('UpdateUserModel', {
     'username': fields.String(required=True, min_length=4, max_length=64),
-    'password': fields.String(required=True, min_length=4, max_length=64),
     'first_name': fields.String(required=True, min_length=4, max_length=64),
     'last_name': fields.String(required=True, min_length=4, max_length=64),
     'date_of_birth': fields.Date(required=True),
@@ -292,10 +291,10 @@ class Users(Resource):
     @rest_api.expect(update_user_model, validate=True)
     def put(self, current_user):
         request_data = request.get_json()
+        print(request_data)
         _username = request_data.get('username')
         _first_name = request_data.get('first_name')
         _last_name = request_data.get('last_name')
-        _password = request_data.get('password')
         _gender = request_data.get('gender')
         _date_of_birth = request_data.get('date_of_birth')
         _country = request_data.get('country')
@@ -310,8 +309,6 @@ class Users(Resource):
             return {'success': False, 'msg': 'User does not exist'}, 400
         user.first_name = _first_name
         user.last_name = _last_name
-        if not user.check_password(_password):
-            user.set_password(_password)
         user.username = _username
         user.gender = _gender
         user.date_of_birth = _date_of_birth
@@ -322,3 +319,20 @@ class Users(Resource):
             user.therapist_location = _therapist_location
         user.save()
         return {'success': True, 'msg': 'User updated successfully'}, 200
+
+
+@rest_api.route('/api/users/account/password')
+class UsersPassword(Resource):
+    @token_required
+    def put(self, current_user):
+        request_data = request.get_json()
+        _password = request_data.get('password')
+        _new_password = request_data.get('new_password')
+        user = User.find_by_id(self.id)
+        if not user:
+            return {'success': False, 'msg': 'User does not exist'}, 400
+        if not user.check_password(_password):
+            return {'success': False, 'msg': 'Wrong password'}, 400
+        user.set_password(_new_password)
+        user.save()
+        return {'success': True, 'msg': 'Password updated successfully'}, 200

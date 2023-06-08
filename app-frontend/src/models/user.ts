@@ -2,7 +2,7 @@ type User = {
     id?: number,
     username: string,
     email?: string,
-    password: string,
+    password?: string,
     type_of_account?: string,
     first_name: string,
     last_name: string,

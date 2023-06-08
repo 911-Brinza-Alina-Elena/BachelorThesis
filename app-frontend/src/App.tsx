@@ -13,6 +13,7 @@ import { logoutUser } from './services/auth-service';
 import { LoggedIn } from './utils/logged-in';
 import { ProtectedRoute } from './utils/protected-route';
 import { AddJournalPage } from './pages/add-journal-page/add-journal-page';
+import { UserPage } from './pages/user-page/user-page';
 
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
@@ -148,6 +149,28 @@ const App = () => {
                   onLogout={handleLogout}
                 />
               </Panel>
+            </ProtectedRoute>
+          }
+        />
+        <Route 
+          path="/user"
+          element={
+            <ProtectedRoute>
+              <UserMenu
+                username={localStorage.getItem("username")!}
+                handleUsernameClick={handleUsernameClick}
+                setShowPanel={setShowPanel} />
+              <UserPage />
+              <Panel
+                isOpen={showPanel}
+                onDismiss={() => setShowPanel(false)}
+                headerText="Menu"
+                isBlocking={false}
+                closeButtonAriaLabel="Close" >
+                <UserPanel
+                  userType={localStorage.getItem("userType")!}
+                  onLogout={handleLogout} />
+                </Panel>
             </ProtectedRoute>
           }
         />
