@@ -1,16 +1,18 @@
 // page for when a patient logs in
 
-import { DefaultButton, DocumentCard, DocumentCardActivity, DocumentCardDetails, DocumentCardTitle, DocumentCardType, IDocumentCardActivityPerson } from "@fluentui/react";
+import { DefaultButton, DocumentCard, DocumentCardActivity, DocumentCardDetails, DocumentCardTitle, DocumentCardType, IDocumentCardActivityPerson, Icon, Panel, Persona } from "@fluentui/react";
 import { LoginRegisterButtonStyle } from "../../components/login-register/login-register-style";
 import { logoutUser } from "../../services/auth-service";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Journal } from "../../models/journal";
 import { getJournals } from "../../services/api-service";
+import { UserPanel } from "../../components/user-panel/user-panel";
 
 export const PatientDashboard = () => {
     const navigate = useNavigate();
     const [journals, setJournals] = useState<Journal[]>([]);
+    const [showPanel, setShowPanel] = useState(false);
 
     const token = localStorage.getItem("token");
 
@@ -32,6 +34,8 @@ export const PatientDashboard = () => {
     const handleCardClick = (journalId: number) => {
         navigate(`/patient/journal/${journalId}`);
     };
+
+    
 
     // get journals from database
     const getAndSetJournals = () => {
@@ -63,17 +67,6 @@ export const PatientDashboard = () => {
         </DocumentCard>
     ));
 
-    const handleLogout = () => {
-        logoutUser().then((response) => {
-            if (response) {
-                navigate('/login');
-            }
-        }).catch((error) => {
-            console.log(error);
-            navigate('/login');
-        });
-    };
-
     if (localStorage.getItem('userType') !== 'patient') {
         if (localStorage.getItem('userType') === 'therapist') {
             navigate('/therapist');
@@ -83,14 +76,16 @@ export const PatientDashboard = () => {
     }
     return (
         <div>
-            <h1>Patient Dashboard</h1>
+            <div>
+                <h1>Patient Dashboard</h1>
+                <DefaultButton
+                    iconProps={{iconName: 'Add'}}
+                    text="New Journal"
+                    onClick={() => navigate('/patient/new-journal')}
+                />
+            </div>
             <h2>Journals</h2>
-            {journalCards}
-            <DefaultButton
-            text="Logout"
-            className={LoginRegisterButtonStyle}
-            onClick={handleLogout}
-            />
+                {journalCards}
         </div>
     );
 };

@@ -138,7 +138,7 @@ class Login(Resource):
         if not user_exists.check_password(_password):
             return {'success': False, 'msg': 'Invalid password'}, 400
 
-        token = jwt.encode({'email': _email, 'exp': datetime.utcnow() + timedelta(minutes=30)}, Config.SECRET_KEY)
+        token = jwt.encode({'email': _email, 'exp': datetime.utcnow() + Config.JWT_ACCESS_TOKEN_EXPIRES}, Config.SECRET_KEY)
         user_exists.set_jwt_auth_active(True)
         user_exists.save()
         return {'success': True, 'user': user_exists.to_json(), 'token': token}, 200
