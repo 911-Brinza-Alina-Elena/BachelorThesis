@@ -33,14 +33,29 @@ const App = () => {
         console.log(error);
         navigate('/login');
     });
-};
+  };
   
+  const handleLogoClick = () => { 
+    if (localStorage.getItem("token") !== null) {
+      if (localStorage.getItem("userType") === "patient") {
+        navigate("/patient");
+      } else if (localStorage.getItem("userType") === "therapist") {
+        navigate("/therapist");
+      } else {
+        navigate("/login");
+      }
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <>
       <img
         src="/therapease-low-resolution-logo-color-on-transparent-background.png"
         alt="Therapease Logo"
         className={logoStyle}
+        onClick={handleLogoClick}
       />
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />

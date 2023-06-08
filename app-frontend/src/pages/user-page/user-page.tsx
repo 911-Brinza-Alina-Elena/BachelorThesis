@@ -62,11 +62,11 @@ export const UserPage = () => {
     };
 
     const handleSpecialityChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
-        setUpdatedUser(user => ({...user!, speciality: newValue!}));
+        setUpdatedUser(user => ({...user!, therapist_speciality: newValue!}));
     };
 
     const handleLocationChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
-        setUpdatedUser(user => ({...user!, location: newValue!}));
+        setUpdatedUser(user => ({...user!, therapist_location: newValue!}));
     };
 
     const onChangeDateOfBirth = useCallback(
@@ -101,6 +101,7 @@ export const UserPage = () => {
             alert('City too short!');
             return;
         }
+        console.log(updatedUser);
         updateUser(token!, updatedUser!)
           .then((response) => {
             setEditMode(false);
@@ -204,7 +205,7 @@ export const UserPage = () => {
                     onChange={handleCityChange}
                     disabled={!editMode}
                 />
-                {user?.type_of_account === 'therapist' && editMode && (
+                {user?.type_of_account === 'therapist' && (
                     <>
                         <TextField
                             label="Speciality"

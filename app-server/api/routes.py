@@ -221,47 +221,46 @@ class Therapist(Resource):
         for relation in patient_therapist_relations:
             patient = User.find_by_id(relation.patient_id)
             patients.append(patient)
-        return {'success': True, 'patients': [patient.to_json() for patient in patients]}, 200
+        return {'success': True, 'patients': [patient.get_all_details() for patient in patients]}, 200
 
     @token_required
     def post(self, current_user):
         # add a patient to the therapist
         request_data = request.get_json()
-        _patient_id = request_data.get('patient_id')
-        if not User.find_by_id(_patient_id):
+        patient_email = request_data.get('email')
+        if not User.find_by_email(patient_email):
             return {'success': False, 'msg': 'Patient does not exist'}, 400
         # check if the user is already a patient of a therapist
-        patient_therapist_relation = PatientTherapistRelation.find_by_patient_id(_patient_id)
+        patient = User.find_by_email(patient_email)
+        patient_therapist_relation = PatientTherapistRelation.find_by_patient_id(patient.id)
         if patient_therapist_relation:
             return {'success': False, 'msg': 'Patient already has a therapist'}, 400
         # check if the id of the patient is a therapist
-        if User.find_by_id(_patient_id).type_of_account == 'therapist':
+        if patient.type_of_account == 'therapist':
             return {'success': False, 'msg': 'Patient is a therapist'}, 400
 
         # add the patient to the therapist
-        patient_therapist_relation = PatientTherapistRelation(patient_id=_patient_id, therapist_id=self.id)
+        patient_therapist_relation = PatientTherapistRelation(patient_id=patient.id, therapist_id=self.id)
         patient_therapist_relation.save()
         return {'success': True, 'msg': 'Patient added successfully'}, 201
 
 
-@rest_api.route('/api/therapists/patient')
+@rest_api.route('/api/therapists/patient/<int:patient_id>')
 class TherapistPatient(Resource):
     @token_required
-    def get(self, current_user):
+    def get(self, current_user, patient_id):
         # get the patient by the id
-        request_data = request.get_json()
-        _patient_id = request_data.get('patient_id')
-        patient = User.find_by_id(_patient_id)
+        patient = User.find_by_id(patient_id)
         if not patient:
             return {'success': False, 'msg': 'Patient does not exist'}, 400
         if patient.type_of_account != 'patient':
             return {'success': False, 'msg': 'User is not a patient'}, 400
         # check if the requested patient is a patient of the therapist
-        patient_therapist_relation = PatientTherapistRelation.find_by_patient_id(_patient_id)
+        patient_therapist_relation = PatientTherapistRelation.find_by_patient_id(patient_id)
         if not patient_therapist_relation:
             return {'success': False, 'msg': 'Patient is not a patient of the therapist'}, 400
         # compute list of all emotions of the journals of the patient, with the corresponding dates
-        journals = JournalEntry.find_by_user_id(_patient_id)
+        journals = JournalEntry.find_by_user_id(patient_id)
         emotions = []
         for journal in journals:
             emotions.append({'emotion': journal.predicted_emotion, 'date': str(journal.entry_date)})
@@ -269,11 +268,9 @@ class TherapistPatient(Resource):
 
 
     @token_required
-    def delete(self, current_user):
+    def delete(self, current_user, patient_id):
         # check if the patient is a patient of the therapist
-        request_data = request.get_json()
-        _patient_id = request_data.get('patient_id')
-        patient_therapist_relation = PatientTherapistRelation.find_by_patient_id(_patient_id)[0]
+        patient_therapist_relation = PatientTherapistRelation.find_by_patient_id(patient_id)[0]
         if not patient_therapist_relation:
             return {'success': False, 'msg': 'Patient is not a patient of the therapist'}, 400
         # delete the patient from the therapist
@@ -299,10 +296,10 @@ class Users(Resource):
         _date_of_birth = request_data.get('date_of_birth')
         _country = request_data.get('country')
         _city = request_data.get('city')
-        _therapist_specialty = None
+        _therapist_speciality = None
         _therapist_location = None
         if self.type_of_account == 'therapist':
-            _therapist_specialty = request_data.get('therapist_specialty')
+            _therapist_speciality = request_data.get('therapist_speciality')
             _therapist_location = request_data.get('therapist_location')
         user = User.find_by_id(self.id)
         if not user:
@@ -315,7 +312,7 @@ class Users(Resource):
         user.country = _country
         user.city = _city
         if self.type_of_account == 'therapist':
-            user.therapist_speciality = _therapist_specialty
+            user.therapist_speciality = _therapist_speciality
             user.therapist_location = _therapist_location
         user.save()
         return {'success': True, 'msg': 'User updated successfully'}, 200

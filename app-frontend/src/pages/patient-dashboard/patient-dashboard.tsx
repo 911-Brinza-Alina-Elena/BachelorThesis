@@ -47,8 +47,6 @@ export const PatientDashboard = () => {
     const people: IDocumentCardActivityPerson[] = [
         { name: localStorage.getItem("username")!, profileImageSrc: '' }];
 
-
-    console.log(journals);
     // map journals to journal cards
     const journalCards = journals.map((journal) => (
         <DocumentCard
@@ -62,13 +60,6 @@ export const PatientDashboard = () => {
         </DocumentCard>
     ));
 
-    if (localStorage.getItem('userType') !== 'patient') {
-        if (localStorage.getItem('userType') === 'therapist') {
-            navigate('/therapist');
-        } else {
-            navigate('/login');
-        }
-    }
     return (
         <div>
             <div>

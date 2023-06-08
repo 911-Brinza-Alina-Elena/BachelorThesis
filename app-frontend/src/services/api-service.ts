@@ -187,3 +187,77 @@ export const updatePassword = async (token: string, password: string, newPasswor
         });
     });
 };
+
+export const getTherapistPatients = async (token: string): Promise<User[]> => {
+    const headers = {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    };
+    return new Promise((resolve, reject) => {
+        axios.get("http://127.0.0.1:5000/api/therapists", headers)
+        .then((response) => {
+            console.log(response);
+            resolve(response.data.patients);
+        })
+        .catch((error) => {
+            console.log(error);
+            reject("An error occurred while trying to get patients.");
+        });
+    });
+};
+
+export const getTherapistPatient = async (token: string, id: number): Promise<User> => {
+    const headers = {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    };
+    return new Promise((resolve, reject) => {
+        axios.get(`http://127.0.0.1:5000/api/therapists/patient/${id}`, headers)
+        .then((response) => {
+            console.log(response);
+            resolve(response.data.patient);
+        }
+        )
+        .catch((error) => {
+            console.log(error);
+            reject("An error occurred while trying to get patient.");
+        }
+        );
+    });
+
+};
+
+export const deletePatient = async (token: string, id: number): Promise<string> => {
+    const headers = {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    };
+    return new Promise((resolve, reject) => {
+        axios.delete(`http://127.0.0.1:5000/api/therapists/patient/${id}`, headers)
+        .then((response) => {
+            console.log(response);
+            resolve(response.data.msg);
+        })
+        .catch((error) => {
+            console.log(error);
+            reject("An error occurred while trying to delete patient.");
+        }
+        );
+    });
+};
+
+export const addPatient = async (token: string, email: string): Promise<string> => {
+    const headers = {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    };
+    return new Promise((resolve, reject) => {
+        axios.post("http://127.0.0.1:5000/api/therapists", {
+            email: email
+        }, headers)
+        .then((response) => {
+            console.log(response);
+            resolve(response.data.msg);
+        })
+        .catch((error) => {
+            console.log(error);
+            reject("An error occurred while trying to add patient.");
+        });
+    });
+};
