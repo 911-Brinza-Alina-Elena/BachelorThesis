@@ -1,20 +1,20 @@
 import React from "react";
 import {
-    LoginRegisterButtonStyle,
+    loginRegisterButtonClassName,
   LoginInputStyle,
   LoginRegisterLabelStyle,
-  SignUpActionButtonStyle,
-  loginFormStyle,
-  loginRegisterFormTitleStyle,
-  loginIconStyle,
-  loginRegisterStyle,
-  registerContainerStyle,
-  registerIconStyle,
+  signUpActionButtonClassName,
+  loginFormClassName,
+  loginRegisterFormClassName,
+  loginIconClassName,
+  loginRegisterClassName,
+  registerContainerClassName,
+  registerIconClassName,
   RegisiterInputStyle,
-  registerColumnStyle,
-  registerFormStyle,
-  optionContainerStyles,
-  choiceGroupStyle,
+  registerColumnClassName,
+  registerFormClassName,
+  optionContainerClassName,
+  choiceGroupClassName,
 } from "./login-register-style";
 import { ActionButton, ChoiceGroup, DatePicker, DefaultButton, IChoiceGroupOption, Label, TextField } from "@fluentui/react";
 import { loginUser, registerUser } from "../../services/auth-service";
@@ -293,14 +293,14 @@ export const LoginRegisterComponent = () => {
   return (
     <>
       {!isRegister ? (
-        <div className={loginRegisterStyle}>
+        <div className={loginRegisterClassName}>
           <img
             src="/—Pngtree—mental health problems flat illustration_6855451.png"
             alt="Therapy session illustration"
-            className={loginIconStyle}
+            className={loginIconClassName}
           />
-          <div className={loginFormStyle}>
-            <p className={loginRegisterFormTitleStyle}>
+          <div className={loginFormClassName}>
+            <p className={loginRegisterFormClassName}>
               Welcome! Are you ready to feel better?
             </p>
             <div>
@@ -335,13 +335,13 @@ export const LoginRegisterComponent = () => {
             </div>
             <DefaultButton
               text="Sign In"
-              className={LoginRegisterButtonStyle}
+              className={loginRegisterButtonClassName}
               onClick={() => sendToLogin()}
             />
             <p>
               Don't have an account?{" "}
               <ActionButton
-                className={SignUpActionButtonStyle}
+                className={signUpActionButtonClassName}
                 onClick={() => {
                   setEmptyErrorStates();
                   setIsRegister(true);
@@ -354,10 +354,10 @@ export const LoginRegisterComponent = () => {
           </div>
         </div>
       ) : (
-        <div className={registerContainerStyle}>
-          <p className={loginRegisterFormTitleStyle}>Join our community</p>
-          <div className={registerFormStyle}>
-            <div className={registerColumnStyle}>
+        <div className={registerContainerClassName}>
+          <p className={loginRegisterFormClassName}>Join our community</p>
+          <div className={registerFormClassName}>
+            <div className={registerColumnClassName}>
               <div>
                 <Label htmlFor="usernameField" styles={LoginRegisterLabelStyle}>
                   Username
@@ -422,7 +422,7 @@ export const LoginRegisterComponent = () => {
                 />
               </div>
             </div>
-            <div className={registerColumnStyle}>
+            <div className={registerColumnClassName}>
               <div>
                 <Label
                   htmlFor="accountTypeField"
@@ -431,11 +431,11 @@ export const LoginRegisterComponent = () => {
                   Pick one
                 </Label>
                 <ChoiceGroup
-                  className={choiceGroupStyle}
+                  className={choiceGroupClassName}
                   selectedKey={typeOfUser}
                   options={accountTypeOptions}
                   onChange={onChangeAccountType}
-                  styles={{ flexContainer: optionContainerStyles,
+                  styles={{ flexContainer: optionContainerClassName,
                   root: {selectors: {
                     '.ms-ChoiceField': {
                       fontFamily: FONT_FAMILY
@@ -489,7 +489,7 @@ export const LoginRegisterComponent = () => {
 
               </div>
             </div>
-            <div className={registerColumnStyle}>
+            <div className={registerColumnClassName}>
               <div>
                 <Label
                   htmlFor="genderField"
@@ -543,7 +543,7 @@ export const LoginRegisterComponent = () => {
               </div>
             </div>
             {typeOfUser === "therapist" && (
-              <div className={registerColumnStyle}>
+              <div className={registerColumnClassName}>
                 <div>
                   <Label htmlFor="specialityField" styles={LoginRegisterLabelStyle}>
                     Speciality
@@ -573,13 +573,13 @@ export const LoginRegisterComponent = () => {
           </div>
           <DefaultButton
             text="Sign Up"
-            className={LoginRegisterButtonStyle}
+            className={loginRegisterButtonClassName}
             onClick={sendToRegister}
           />
           <p>
             Already have an account?{" "}
             <ActionButton
-              className={SignUpActionButtonStyle}
+              className={signUpActionButtonClassName}
               onClick={() => {
                 setEmptyErrorStates();
                 setIsRegister(false);
@@ -592,7 +592,7 @@ export const LoginRegisterComponent = () => {
           <img
             src="/33891894_2210_w048_n005_383b_p1_383-removebg-preview.png"
             alt="Welcome to Therapease"
-            className={registerIconStyle}
+            className={registerIconClassName}
           />
         </div>
       )}

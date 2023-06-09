@@ -86,7 +86,6 @@ const App = () => {
                 closeButtonAriaLabel="Close"
               >
                 <UserPanel
-                  userType={localStorage.getItem("userType")!}
                   onLogout={handleLogout}
                 />
               </Panel>
@@ -111,7 +110,6 @@ const App = () => {
                 closeButtonAriaLabel="Close"
               >
                 <UserPanel
-                  userType={localStorage.getItem("userType")!}
                   onLogout={handleLogout}
                 />
               </Panel>
@@ -136,7 +134,6 @@ const App = () => {
                 closeButtonAriaLabel="Close"
               >
                 <UserPanel
-                  userType={localStorage.getItem("userType")!}
                   onLogout={handleLogout}
                 />
               </Panel>
@@ -161,7 +158,6 @@ const App = () => {
                 closeButtonAriaLabel="Close"
               >
                 <UserPanel
-                  userType={localStorage.getItem("userType")!}
                   onLogout={handleLogout}
                 />
               </Panel>
@@ -184,7 +180,6 @@ const App = () => {
                 isBlocking={false}
                 closeButtonAriaLabel="Close" >
                 <UserPanel
-                  userType={localStorage.getItem("userType")!}
                   onLogout={handleLogout} />
                 </Panel>
             </ProtectedRoute>
@@ -208,7 +203,6 @@ const App = () => {
                 closeButtonAriaLabel="Close"
               >
                 <UserPanel
-                  userType={localStorage.getItem("userType")!}
                   onLogout={handleLogout}
                 />
               </Panel>

@@ -1,14 +1,14 @@
 import { DefaultButton, Stack } from "@fluentui/react";
+import { logoutButtonClassName, userPanelClassName } from "./user-panel-style";
 
 interface UserPanelProps {
-    userType: string;
     onLogout: () => void;
 };
 
-export const UserPanel = ({ userType, onLogout }: UserPanelProps) => {
+export const UserPanel = ({ onLogout }: UserPanelProps) => {
     return (
-        <Stack tokens={{ childrenGap: 10 }}>
-            <DefaultButton text="Logout" onClick={onLogout} />
+        <Stack tokens={{ childrenGap: 10 }} className={userPanelClassName}>
+            <DefaultButton className={logoutButtonClassName} text="Logout" onClick={onLogout} />
         </Stack>
     )
 };

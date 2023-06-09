@@ -1,7 +1,7 @@
 import { ILabelStyles, ITextFieldStyles, mergeStyles } from "@fluentui/react";
 import { BUTTON_COLOR, FONT_FAMILY, LOGIN_REGISTER_COLOR, WHITE_COLOR } from "../../constants";
 
-export const loginRegisterStyle = mergeStyles({
+export const loginRegisterClassName = mergeStyles({
     backgroundColor: LOGIN_REGISTER_COLOR,
     width: "75%",
     height: "75%",
@@ -15,7 +15,7 @@ export const loginRegisterStyle = mergeStyles({
     minHeight: "500px",
 });
 
-export const registerContainerStyle = mergeStyles({
+export const registerContainerClassName = mergeStyles({
     backgroundColor: LOGIN_REGISTER_COLOR,
     width: "75%",
     height: "75%",
@@ -29,29 +29,29 @@ export const registerContainerStyle = mergeStyles({
     minHeight: "500px",
 });
 
-export const loginIconStyle = mergeStyles({
+export const loginIconClassName = mergeStyles({
     width: "50%"
 });
 
-export const registerIconStyle = mergeStyles({
+export const registerIconClassName = mergeStyles({
     width: "40%"
 });
 
-export const loginFormStyle = mergeStyles({
+export const loginFormClassName = mergeStyles({
     display: "flex",
     flexDirection: "column",
     width: "50%",
     alignItems: "center",
 });
 
-export const registerFormStyle = mergeStyles({
+export const registerFormClassName = mergeStyles({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
 });
 
-export const loginRegisterFormTitleStyle = mergeStyles({
+export const loginRegisterFormClassName = mergeStyles({
     fontSize: "1.3em",
 });
 
@@ -95,7 +95,7 @@ export const RegisiterInputStyle: Partial<ITextFieldStyles> = {
     }
 };
 
-export const LoginRegisterButtonStyle = mergeStyles({
+export const loginRegisterButtonClassName = mergeStyles({
     width: "7vw",
     height: "5vh",
     minHeight:"25px",
@@ -107,22 +107,22 @@ export const LoginRegisterButtonStyle = mergeStyles({
     color: WHITE_COLOR 
 });
 
-export const SignUpActionButtonStyle = mergeStyles({
+export const signUpActionButtonClassName = mergeStyles({
     fontFamily: FONT_FAMILY,
     fontSize: "1em",
 });
 
-export const registerColumnStyle = mergeStyles({
+export const registerColumnClassName = mergeStyles({
     display: "flex",
     flexDirection: "column",
     marginRight: "2vw",
 });
 
-export const choiceGroupStyle = mergeStyles({
+export const choiceGroupClassName = mergeStyles({
     fontFamily: FONT_FAMILY,
 });
 
-export const optionContainerStyles = mergeStyles({
+export const optionContainerClassName = mergeStyles({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-evenly',

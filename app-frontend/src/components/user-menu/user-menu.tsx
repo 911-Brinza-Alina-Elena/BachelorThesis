@@ -1,4 +1,5 @@
 import { Icon, Persona } from "@fluentui/react";
+import { menuIconClassName, personaClassName, userMenuClassName } from "./user-menu-style";
 
 interface UserMenuProps {
     username: string;
@@ -8,25 +9,16 @@ interface UserMenuProps {
 
 export const UserMenu = ({username, handleUsernameClick, setShowPanel}: UserMenuProps) => {
     return (
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
+      <div className={userMenuClassName}>
         <Persona
           text={username}
           onClick={handleUsernameClick}
-          style={{ cursor: "pointer" }}
+          className={personaClassName}
         />
         <Icon
           iconName="CollapseMenu"
           onClick={() => setShowPanel(true)}
-          style={{ cursor: "pointer", marginLeft: "10px" }}
+          className={menuIconClassName}
         />
       </div>
     );
