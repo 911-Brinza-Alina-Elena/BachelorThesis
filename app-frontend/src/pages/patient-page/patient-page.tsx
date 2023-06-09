@@ -3,12 +3,16 @@ import Patient from "../../models/patient";
 import { useEffect, useState } from "react";
 import { getTherapistPatient } from "../../services/api-service";
 import * as d3 from "d3";
+import { Dropdown, IDropdownOption } from "@fluentui/react";
 
 export const PatientPage = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const [patient, setPatient] = useState<Patient>();
     const token = localStorage.getItem("token");
+    const [selectedDate, setSelectedDate] = useState<string>();
+    const [availableDates, setAvailableDates] = useState<IDropdownOption[]>([]);
+    const [emotions, setEmotions] = useState<string[]>([]);
 
     useEffect(() => {
         if (token) {
@@ -25,6 +29,7 @@ export const PatientPage = () => {
         const patient_id = parseInt(id!);
         getTherapistPatient(token!, patient_id).then((response) => {
             setPatient(response);
+            getAndSetAvailableDates();
         }).catch((error) => {
             console.log(error);
             alert(error);
@@ -36,6 +41,21 @@ export const PatientPage = () => {
             createEmotionsPieChart();
         }
     }, [patient]);
+
+    const getAndSetAvailableDates = () => {
+        if (patient) {
+            const dates = patient.emotions.map((emotion) => emotion.date);
+            // remove duplicates from dates
+            const uniqueDates = dates.filter((date, index) => dates.indexOf(date) === index);
+            const dropdownOptions = uniqueDates.map((date) => {
+                const dateConv = new Date(date);
+                const dateStr = dateConv.toLocaleDateString();
+                return {key: dateStr,
+                        text: dateStr};
+            });
+            setAvailableDates(dropdownOptions);
+        }
+    };
 
     const createEmotionsPieChart = () => {
         const emotionsCount = new Map<string, number>();
@@ -106,6 +126,21 @@ export const PatientPage = () => {
         .text("Emotions and their frequency");
     };
 
+    const handleDateChange = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption) => {
+        if (option) {
+            const date = option.key as string;
+            setSelectedDate(date);
+            // set emotions for that date
+            const emotionsForDate = patient?.emotions.filter((emotion) => { 
+                const emotionDate = new Date(emotion.date);
+                return emotionDate.toLocaleDateString() === date});
+            if (emotionsForDate) {
+                const emotions = emotionsForDate.map((emotion) => emotion.emotion);
+                setEmotions(emotions);
+            }
+        }
+    }
+
     return (
         <div>
             <h1>{patient?.first_name} {patient?.last_name}'s dashboard</h1>
@@ -119,9 +154,37 @@ export const PatientPage = () => {
                 <p>Country: {patient?.country}</p>
                 <p>City: {patient?.city}</p>
             </div>
-            <p>Statistics: </p>
-            <div id="emotions-pie-chart">
+            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent:'space-around'}}>
+                <div>
+                    <p>Select a date: </p>
+                    <Dropdown 
+                        options={availableDates}    
+                        placeholder="--Select a date--"
+                        onChange={handleDateChange}
+                        selectedKey={selectedDate}
+                    />
+                    {selectedDate && (
+                        <div>
+                            <p>Emotions for {selectedDate}: </p>
+                            {emotions.length > 0 
+                            ? (
+                                emotions.map((emotion, index) => (
+                                    <p key={index}>{emotion}</p>
+                                ))
+                            )
+                            : (
+                                <p>No emotions recorded for this date.</p>
+                            )}
+                        </div>
+                    )}
+                </div>
+                <div>
+                    <p>Statistics: </p>
+                    <div id="emotions-pie-chart">
+                    </div>
+                </div>
             </div>
+            
         </div>
     );
 }
