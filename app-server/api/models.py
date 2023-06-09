@@ -91,7 +91,7 @@ class JWTTokenBlocklist(db.Model):
 
 class JournalEntry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     entry_date = db.Column(db.Date, nullable=False)
     entry_title = db.Column(db.String(100), nullable=False)
     entry_text = db.Column(db.Text(), nullable=False)
@@ -151,8 +151,8 @@ class JournalEntry(db.Model):
 
 class PatientTherapistRelation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    patient_id = db.Column(db.Integer, nullable=False, unique=True)
-    therapist_id = db.Column(db.Integer, nullable=False)
+    patient_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, unique=True)
+    therapist_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
         return f'<PatientTherapistRelation {self.id}>'

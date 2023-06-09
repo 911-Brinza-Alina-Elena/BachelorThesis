@@ -57,19 +57,18 @@ export const JournalPage = () => {
         [],
     );
 
-    if (token) {
-        if (localStorage.getItem('userType') !== 'patient') {
-            if (localStorage.getItem('userType') === 'therapist') {
-                navigate('/therapist');
-            } else {
-                navigate('/login');
-            }
-        }
-    } else {
-        navigate('/login');
-    }
-
     useEffect(() => {
+        if (token) {
+            if (localStorage.getItem('userType') !== 'patient') {
+                if (localStorage.getItem('userType') === 'therapist') {
+                    navigate('/therapist');
+                } else {
+                    navigate('/login');
+                }
+            }
+        } else {
+            navigate('/login');
+        }
         const id_val = parseInt(id!);
         getJournal(token!, id_val!).then((response) => {
             setJournal(response);

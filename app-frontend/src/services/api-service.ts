@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Journal } from '../models/journal';
 import User from '../models/user';
+import Patient from '../models/patient';
 
 export const getJournals = async (token: string): Promise<Journal[]> => {
   // axios call to get all journals for a patient
@@ -205,7 +206,7 @@ export const getTherapistPatients = async (token: string): Promise<User[]> => {
     });
 };
 
-export const getTherapistPatient = async (token: string, id: number): Promise<User> => {
+export const getTherapistPatient = async (token: string, id: number): Promise<Patient> => {
     const headers = {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     };
@@ -213,7 +214,20 @@ export const getTherapistPatient = async (token: string, id: number): Promise<Us
         axios.get(`http://127.0.0.1:5000/api/therapists/patient/${id}`, headers)
         .then((response) => {
             console.log(response);
-            resolve(response.data.patient);
+            const responseData = {
+                id: response.data.patient.id,
+                username: response.data.patient.username,
+                email: response.data.patient.email,
+                type_of_account: response.data.patient.type_of_account,
+                first_name: response.data.patient.first_name,
+                last_name: response.data.patient.last_name,
+                date_of_birth: new Date(response.data.patient.date_of_birth),
+                gender: response.data.patient.gender,
+                country: response.data.patient.country,
+                city: response.data.patient.city,
+                emotions: response.data.emotions
+            };
+            resolve(responseData);
         }
         )
         .catch((error) => {

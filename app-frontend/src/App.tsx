@@ -14,6 +14,7 @@ import { LoggedIn } from './utils/logged-in';
 import { ProtectedRoute } from './utils/protected-route';
 import { AddJournalPage } from './pages/add-journal-page/add-journal-page';
 import { UserPage } from './pages/user-page/user-page';
+import { PatientPage } from './pages/patient-page/patient-page';
 
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
@@ -186,6 +187,31 @@ const App = () => {
                   userType={localStorage.getItem("userType")!}
                   onLogout={handleLogout} />
                 </Panel>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/therapist/patient/:id"
+          element={
+            <ProtectedRoute>
+              <UserMenu
+                username={localStorage.getItem("username")!}
+                handleUsernameClick={handleUsernameClick}
+                setShowPanel={setShowPanel}
+              />
+              <PatientPage />
+              <Panel
+                isOpen={showPanel}
+                onDismiss={() => setShowPanel(false)}
+                headerText="Menu"
+                isBlocking={false}
+                closeButtonAriaLabel="Close"
+              >
+                <UserPanel
+                  userType={localStorage.getItem("userType")!}
+                  onLogout={handleLogout}
+                />
+              </Panel>
             </ProtectedRoute>
           }
         />
