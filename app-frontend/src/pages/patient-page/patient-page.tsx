@@ -136,7 +136,9 @@ export const PatientPage = () => {
                 return emotionDate.toLocaleDateString() === date});
             if (emotionsForDate) {
                 const emotions = emotionsForDate.map((emotion) => emotion.emotion);
-                setEmotions(emotions);
+                // make the emotions unique
+                const uniqueEmotions = emotions.filter((emotion, index) => emotions.indexOf(emotion) === index);
+                setEmotions(uniqueEmotions);
             }
         }
     }
