@@ -86,12 +86,12 @@ export const PatientPage = () => {
             .enter()
             .append("svg")
             .attr("width", width)
-            .attr("height", height)
+            .attr("height", height + 50)
             ;
 
         const g = svg
             .append("g")
-            .attr("transform", `translate(${width / 2}, ${height / 2})`);
+            .attr("transform", `translate(${width / 2}, ${(height + 50) / 2})`);
 
         const pie = d3.pie<{emotion: string; count: number}>().value((d: any) => d.count);
         const arc = d3.arc<d3.PieArcDatum<{emotion: string; count: number}>>().innerRadius(0).outerRadius(radius-10);
@@ -122,9 +122,9 @@ export const PatientPage = () => {
         svg
         .append("text")
         .attr("x", width / 2)
-        .attr("y", 10)
+        .attr("y", 20)
         .attr("text-anchor", "middle")
-        .style("font-size", 12)
+        .style("font-size", 16)
         .text("Emotions and their frequency");
     };
 
