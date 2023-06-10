@@ -47,13 +47,13 @@ update_user_model = rest_api.model('UpdateUserModel', {
 
 post_journal_model = rest_api.model('JournalModel', {
     'entry_title': fields.String(required=True, min_length=4, max_length=64),
-    'entry_text': fields.String(required=True, min_length=4, max_length=64)
+    'entry_text': fields.String(required=True, min_length=4)
 })
 
 update_journal_model = rest_api.model('UpdateJournalModel', {
     '_id': fields.Integer(required=True),
     'entry_title': fields.String(required=False, min_length=4, max_length=64),
-    'entry_text': fields.String(required=False, min_length=4, max_length=64)
+    'entry_text': fields.String(required=False, min_length=4)
 })
 
 

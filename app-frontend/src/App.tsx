@@ -1,7 +1,6 @@
 import { Panel } from '@fluentui/react';
 import { useState } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import './App.css';
 import { UserMenu } from './components/user-menu/user-menu';
 import { UserPanel } from './components/user-panel/user-panel';
 import { JournalPage } from './pages/journal-page/journal-page';
@@ -15,6 +14,7 @@ import { ProtectedRoute } from './utils/protected-route';
 import { AddJournalPage } from './pages/add-journal-page/add-journal-page';
 import { UserPage } from './pages/user-page/user-page';
 import { PatientPage } from './pages/patient-page/patient-page';
+import { userPanelClassName } from './App-style';
 
 const App = () => {
   const [showPanel, setShowPanel] = useState(false);
@@ -79,6 +79,7 @@ const App = () => {
               />
               <PatientDashboard />
               <Panel
+                headerClassName={userPanelClassName}
                 isOpen={showPanel}
                 onDismiss={() => setShowPanel(false)}
                 headerText="Menu"
@@ -103,6 +104,7 @@ const App = () => {
               />
               <TherapistDashboard />
               <Panel
+                headerClassName={userPanelClassName}
                 isOpen={showPanel}
                 onDismiss={() => setShowPanel(false)}
                 headerText="Menu"
@@ -127,6 +129,7 @@ const App = () => {
               />
               <JournalPage />
               <Panel
+                headerClassName={userPanelClassName}
                 isOpen={showPanel}
                 onDismiss={() => setShowPanel(false)}
                 headerText="Menu"
@@ -151,6 +154,7 @@ const App = () => {
               />
               <AddJournalPage />
               <Panel
+                headerClassName={userPanelClassName}
                 isOpen={showPanel}
                 onDismiss={() => setShowPanel(false)}
                 headerText="Menu"
@@ -174,6 +178,7 @@ const App = () => {
                 setShowPanel={setShowPanel} />
               <UserPage />
               <Panel
+                headerClassName={userPanelClassName}
                 isOpen={showPanel}
                 onDismiss={() => setShowPanel(false)}
                 headerText="Menu"
@@ -196,6 +201,7 @@ const App = () => {
               />
               <PatientPage />
               <Panel
+                headerClassName={userPanelClassName}
                 isOpen={showPanel}
                 onDismiss={() => setShowPanel(false)}
                 headerText="Menu"

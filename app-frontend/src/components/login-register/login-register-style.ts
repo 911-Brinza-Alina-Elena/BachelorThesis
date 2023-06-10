@@ -75,6 +75,13 @@ export const LoginInputStyle: Partial<ITextFieldStyles> = {
                 border: "none",
             }
         }
+    },
+    root: {
+        selectors: {
+            ".ms-TextField-field": {
+                fontFamily: FONT_FAMILY,
+            }
+        }
     }
 };
 
@@ -90,6 +97,13 @@ export const RegisiterInputStyle: Partial<ITextFieldStyles> = {
         selectors: {
             ".ms-TextField-fieldGroup": {
                 border: "none",
+            }
+        }
+    },
+    root: {
+        selectors: {
+            ".ms-TextField-field": {
+                fontFamily: FONT_FAMILY,
             }
         }
     }

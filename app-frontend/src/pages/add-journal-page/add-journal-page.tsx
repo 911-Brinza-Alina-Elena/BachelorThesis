@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Journal } from "../../models/journal";
 import { addJournal } from "../../services/api-service";
+import { addContentInputStyle, addInputClassName, addJournalClassName, addJournalTitleClassName, addTitleInputStyle, buttonsClassName, cancelButtonClassName, saveButtonClassName } from "./add-journal-page-style";
 
 export const AddJournalPage = () => {
     const navigate = useNavigate();
@@ -66,10 +67,38 @@ export const AddJournalPage = () => {
     }
 
     return (
-    <div>
-        <TextField label="Title" value={title} onChange={onChangeTitle} errorMessage={titleError}/>
-        <TextField label="Content" multiline rows={5} value={content} onChange={onChangeContent} errorMessage={contentError}/>
-        <DefaultButton text="Save" onClick={handleSave}/>
-        <DefaultButton text="Cancel" onClick={handleCancel}/>
-    </div>);
+      <div className={addJournalClassName}>
+        <h2 className={addJournalTitleClassName}>Add a journal</h2>
+        <TextField
+          className={addInputClassName}
+          label="Title"
+          value={title}
+          onChange={onChangeTitle}
+          errorMessage={titleError}
+          styles={addTitleInputStyle}
+        />
+        <TextField
+          className={addInputClassName}
+          label="Content"
+          multiline
+          rows={10}
+          value={content}
+          onChange={onChangeContent}
+          errorMessage={contentError}
+          styles={addContentInputStyle}
+        />
+        <div className={buttonsClassName}>
+          <DefaultButton
+            className={saveButtonClassName}
+            text="Save"
+            onClick={handleSave}
+          />
+          <DefaultButton
+            className={cancelButtonClassName}
+            text="Cancel"
+            onClick={handleCancel}
+          />
+        </div>
+      </div>
+    );
 };

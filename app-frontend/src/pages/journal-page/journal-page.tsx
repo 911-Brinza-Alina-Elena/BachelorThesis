@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { DefaultButton, Dialog, DialogFooter, DialogType, PrimaryButton, TextField } from "@fluentui/react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { ANGER_COLOR, FEAR_COLOR, JOY_COLOR, LOVE_COLOR, SADNESS_COLOR, SURPRISE_COLOR } from "../../constants";
 import { Journal } from "../../models/journal";
 import { deleteJournal, getJournal, updateJournal } from "../../services/api-service";
-import { DefaultButton, Dialog, DialogFooter, DialogType, PrimaryButton, TextField } from "@fluentui/react";
-import React from "react";
+import { buttonsClassName, cancelButtonClassName, deleteButtonClassName, editButtonClassName, editButtonsClassName, editInputClassName, editTitleInputStyle, editJournalClassName, saveButtonClassName, viewJournalClassName, editContentInputStyle } from "./journal-page-style";
 
 export const JournalPage = () => {
     const navigate = useNavigate();
@@ -13,6 +14,8 @@ export const JournalPage = () => {
     const token = localStorage.getItem("token");
     const [editing, setEditing] = useState<boolean>(false);
     const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
+
+    const [emotionColor, setEmotionColor] = useState<string>();
 
     const handleEdit = () => {
         setEditing(true);
@@ -57,6 +60,22 @@ export const JournalPage = () => {
         [],
     );
 
+    const handleEmotionColor = () => {
+        if (journal?.entry_emotion === "anger") {
+            setEmotionColor(ANGER_COLOR);
+        } else if (journal?.entry_emotion === "fear") {
+            setEmotionColor(FEAR_COLOR);
+        } else if (journal?.entry_emotion === "joy") {
+            setEmotionColor(JOY_COLOR);
+        } else if (journal?.entry_emotion === "love") {
+            setEmotionColor(LOVE_COLOR);
+        } else if (journal?.entry_emotion === "sadness") {
+            setEmotionColor(SADNESS_COLOR);
+        } else if (journal?.entry_emotion === "surprise") {
+            setEmotionColor(SURPRISE_COLOR);
+        }
+    }
+
     useEffect(() => {
         if (token) {
             if (localStorage.getItem('userType') !== 'patient') {
@@ -79,34 +98,83 @@ export const JournalPage = () => {
         });
     }, [id, token]);
 
-    return (<div>
-        {editing 
-        ? (<div>
-            <TextField label="Title" value={journal?.entry_title} onChange={onChangeTitle}/>
-            <TextField label="Content" multiline rows={5} value={journal?.entry_text} onChange={onChangeContent}/>
-            <DefaultButton text="Save" onClick={handleSave}/>
-            <DefaultButton text="Cancel" onClick={handleCancel}/>
-        </div>)
-        : (<div>
-            <h2>{journal?.entry_title}</h2>
+    useEffect(() => {
+        handleEmotionColor();
+    }, [journal]);
+
+    return (
+      <div>
+        {editing ? (
+          <div className={editJournalClassName}>
+            <TextField
+            className={editInputClassName}
+              label="Title"
+              value={journal?.entry_title}
+              onChange={onChangeTitle}
+              styles={editTitleInputStyle}
+            />
+            <TextField
+                className={editInputClassName}
+              label="Content"
+              multiline
+              rows={10}
+              value={journal?.entry_text}
+              onChange={onChangeContent}
+              styles={editContentInputStyle}
+            />
+            <div className={editButtonsClassName}>
+              <DefaultButton
+                className={saveButtonClassName}
+                text="Save"
+                onClick={handleSave}
+              />
+              <DefaultButton
+                className={cancelButtonClassName}
+                text="Cancel"
+                onClick={handleCancel}
+              />
+            </div>
+          </div>
+        ) : (
+          <div className={viewJournalClassName}>
+            <h1>{journal?.entry_title}</h1>
             <p>{journal?.entry_text}</p>
-            <p>Emotion: {journal?.entry_emotion}</p>
+            <p style={{ color: emotionColor }}>
+              Emotion: {journal?.entry_emotion}
+            </p>
             <p>Created on: {journal?.entry_date!.toString()}</p>
-            <PrimaryButton text="Edit" onClick={handleEdit}/>
-            <DefaultButton text="Delete" onClick={() => setConfirmDelete(true)}/>
-        </div>)}
+            <div className={buttonsClassName}>
+              <PrimaryButton
+                className={editButtonClassName}
+                text="Edit"
+                onClick={handleEdit}
+              />
+              <DefaultButton
+                iconProps={{ iconName: "Delete" }}
+                className={deleteButtonClassName}
+                text="Delete"
+                onClick={() => setConfirmDelete(true)}
+              />
+            </div>
+          </div>
+        )}
         <Dialog
-            hidden={!confirmDelete}
-            onDismiss={() => setConfirmDelete(false)}
-            dialogContentProps={{
-                type: DialogType.normal,
-                title: 'Confirm Delete',
-                subText: 'Are you sure you want to delete this journal entry?'
-            }}>
-            <DialogFooter>
-                <PrimaryButton text="Delete" onClick={handleDelete}/>
-                <DefaultButton text="Cancel" onClick={() => setConfirmDelete(false)}/>
-            </DialogFooter>
-            </Dialog>
-    </div>);
+          hidden={!confirmDelete}
+          onDismiss={() => setConfirmDelete(false)}
+          dialogContentProps={{
+            type: DialogType.normal,
+            title: "Confirm Delete",
+            subText: "Are you sure you want to delete this journal entry?",
+          }}
+        >
+          <DialogFooter>
+            <PrimaryButton text="Delete" onClick={handleDelete} />
+            <DefaultButton
+              text="Cancel"
+              onClick={() => setConfirmDelete(false)}
+            />
+          </DialogFooter>
+        </Dialog>
+      </div>
+    );
 };
