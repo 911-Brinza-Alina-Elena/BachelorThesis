@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e087fff6-c976-44c1-ac75-c7b62ac2d43f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app-frontend/src/pages/therapist-dashboard/therapist-dashboard-style.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../app-frontend/src/pages/therapist-dashboard/therapist-dashboard-style.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app-frontend/src/pages/user-page/user-page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../app-frontend/src/pages/user-page/user-page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +140,7 @@
       <workItem from="1686259515520" duration="42000" />
       <workItem from="1686319467957" duration="4871000" />
       <workItem from="1686393316679" duration="124000" />
-      <workItem from="1686393461620" duration="1460000" />
+      <workItem from="1686393461620" duration="1461000" />
     </task>
     <servers />
   </component>

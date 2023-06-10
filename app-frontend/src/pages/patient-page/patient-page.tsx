@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getTherapistPatient } from "../../services/api-service";
 import * as d3 from "d3";
 import { Dropdown, IDropdownOption } from "@fluentui/react";
+import { dashboardClassName, dateEmotionDivClassName, dropdownDivClassName, dropdownStyle, frequencyDivClassName, personalDetailsDivClassName, statisticsDivClassName, titleClassName } from "./patient-page-style";
 
 export const PatientPage = () => {
     const navigate = useNavigate();
@@ -145,10 +146,9 @@ export const PatientPage = () => {
     }
 
     return (
-        <div>
-            <h1>{patient?.first_name} {patient?.last_name}'s dashboard</h1>
-            <div>
-                <p>Personal details: </p>
+        <div className={dashboardClassName}>
+            <h1 className={titleClassName}>{patient?.first_name} {patient?.last_name}'s dashboard</h1>
+            <div className={personalDetailsDivClassName}>
                 <p>First name: {patient?.first_name}</p>
                 <p>Last name: {patient?.last_name}</p>
                 <p>Email: {patient?.email}</p>
@@ -157,14 +157,16 @@ export const PatientPage = () => {
                 <p>Country: {patient?.country}</p>
                 <p>City: {patient?.city}</p>
             </div>
-            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent:'space-around'}}>
-                <div>
+            <div className={statisticsDivClassName}>
+                <div className={dateEmotionDivClassName}>
                     <p>Select a date: </p>
                     <Dropdown 
+                        className={dropdownDivClassName}
                         options={availableDates}    
                         placeholder="--Select a date--"
                         onChange={handleDateChange}
                         selectedKey={selectedDate}
+                        styles={dropdownStyle}
                     />
                     {selectedDate && (
                         <div>
@@ -181,7 +183,7 @@ export const PatientPage = () => {
                         </div>
                     )}
                 </div>
-                <div>
+                <div className={frequencyDivClassName}>
                     <p>Statistics: </p>
                     <div id="emotions-pie-chart">
                     </div>

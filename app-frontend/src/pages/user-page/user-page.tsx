@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import User from "../../models/user";
 import { getUser, updatePassword, updateUser } from "../../services/api-service";
 import { DatePicker, DefaultButton, Stack, TextField } from "@fluentui/react";
+import { buttonsClassName, cancelButtonClassName, detailsAndPasswordDivClassName, detailsDivClassName, editButtonClassName, headerClassName, mainDivClassName, passwordDivClassName, profileInputStyle, saveButtonClassName, savePasswordButtonClassName } from "./user-page-style";
 
 export const UserPage = () => {
     const navigate = useNavigate();
@@ -154,105 +155,136 @@ export const UserPage = () => {
     }
 
     return (
-        <div style={{width: '50%'}}>
-            <h1>User Profile</h1>
-            <div>
-                <h2>Personal details</h2>
+      <div className={mainDivClassName}>
+        <h1 className={headerClassName}>Your Profile</h1>
+        <div className={detailsAndPasswordDivClassName}>
+          <div className={detailsDivClassName}>
+            <h2>Personal details</h2>
+            <TextField
+              label="Username"
+              value={updatedUser?.username}
+              onChange={handleUsernameChange}
+              disabled={!editMode}
+              styles={profileInputStyle}
+            />
+            <TextField
+              label="Email"
+              value={updatedUser?.email}
+              disabled={true}
+              styles={profileInputStyle}
+            />
+            <TextField
+              label="First Name"
+              value={updatedUser?.first_name}
+              onChange={handleFirstNameChange}
+              disabled={!editMode}
+              styles={profileInputStyle}
+            />
+            <TextField
+              label="Last Name"
+              value={updatedUser?.last_name}
+              onChange={handleLastNameChange}
+              disabled={!editMode}
+              styles={profileInputStyle}
+            />
+            <DatePicker
+              label="Date of Birth"
+              value={updatedUser?.date_of_birth}
+              onSelectDate={onChangeDateOfBirth}
+              disabled={!editMode}
+              styles={profileInputStyle}
+            />
+            <TextField
+              label="Gender"
+              value={updatedUser?.gender}
+              onChange={handleGenderChange}
+              disabled={!editMode}
+              styles={profileInputStyle}
+            />
+            <TextField
+              label="Country"
+              value={updatedUser?.country}
+              onChange={handleCountryChange}
+              disabled={!editMode}
+              styles={profileInputStyle}
+            />
+            <TextField
+              label="City"
+              value={updatedUser?.city}
+              onChange={handleCityChange}
+              disabled={!editMode}
+              styles={profileInputStyle}
+            />
+            {user?.type_of_account === "therapist" && (
+              <>
                 <TextField
-                    label="Username"
-                    value={updatedUser?.username}
-                    onChange={handleUsernameChange}
-                    disabled={!editMode}
-                />
-                <TextField
-                    label="Email"
-                    value={updatedUser?.email}
-                    disabled={true}
-                />
-                <TextField
-                    label="First Name"
-                    value={updatedUser?.first_name}
-                    onChange={handleFirstNameChange}
-                    disabled={!editMode}
-                />
-                <TextField
-                    label="Last Name"
-                    value={updatedUser?.last_name}
-                    onChange={handleLastNameChange}
-                    disabled={!editMode}
-                />
-                <DatePicker
-                  label="Date of Birth"
-                  value={updatedUser?.date_of_birth}
-                  onSelectDate={onChangeDateOfBirth}
+                  label="Speciality"
+                  value={updatedUser?.therapist_speciality}
+                  onChange={handleSpecialityChange}
                   disabled={!editMode}
+                  styles={profileInputStyle}
                 />
                 <TextField
-                    label="Gender"
-                    value={updatedUser?.gender}
-                    onChange={handleGenderChange}
-                    disabled={!editMode}
+                  label="Location"
+                  value={updatedUser?.therapist_location}
+                  onChange={handleLocationChange}
+                  disabled={!editMode}
+                  styles={profileInputStyle}
                 />
-                <TextField
-                    label="Country"
-                    value={updatedUser?.country}
-                    onChange={handleCountryChange}
-                    disabled={!editMode}
+              </>
+            )}
+            {!editMode && (
+              <DefaultButton
+                className={editButtonClassName}
+                text="Edit"
+                onClick={handleEditClick}
+              />
+            )}
+            {editMode && (
+              <Stack
+                className={buttonsClassName}
+                horizontal
+                tokens={{ childrenGap: 10 }}
+              >
+                <DefaultButton
+                  className={saveButtonClassName}
+                  text="Save"
+                  onClick={handleSaveClick}
                 />
-                <TextField
-                    label="City"
-                    value={updatedUser?.city}
-                    onChange={handleCityChange}
-                    disabled={!editMode}
+                <DefaultButton
+                  className={cancelButtonClassName}
+                  text="Cancel"
+                  onClick={handleCancelClick}
                 />
-                {user?.type_of_account === 'therapist' && (
-                    <>
-                        <TextField
-                            label="Speciality"
-                            value={updatedUser?.therapist_speciality}
-                            onChange={handleSpecialityChange}
-                            disabled={!editMode}
-                        />
-                        <TextField
-                            label="Location"
-                            value={updatedUser?.therapist_location}
-                            onChange={handleLocationChange}
-                            disabled={!editMode}
-                        />
-                    </>
-                )}
-                {!editMode && (
-                    <DefaultButton text="Edit" onClick={handleEditClick} />
-                )}
-                {editMode && (
-                    <Stack horizontal tokens={{ childrenGap: 10 }}>
-                        <DefaultButton text="Save" onClick={handleSaveClick} />
-                        <DefaultButton text="Cancel" onClick={handleCancelClick} />
-                    </Stack>
-                )}
-            </div>
-            <div>
-                <h2>Change password</h2>
-                <TextField
-                    label="Current Password"
-                    type="password"
-                    value={currentPassword}
-                    onChange={handleCurrentPasswordChange}
-                />
-                <TextField
-                    label="New Password"
-                    type="password"
-                    value={newPassword}
-                    onChange={handleNewPasswordChange}
-                />
-                <TextField
-                    label="Confirm Password"
-                    type="password"
-                    value={confirmPassword}
-                    onChange={handleConfirmPasswordChange}
-                />
-                <DefaultButton text="Save" onClick={savePasswordChange} />
-            </div>
+              </Stack>
+            )}
+          </div>
+          <div className={passwordDivClassName}>
+            <h2>Change password</h2>
+            <TextField
+              label="Current Password"
+              type="password"
+              value={currentPassword}
+              onChange={handleCurrentPasswordChange}
+              styles={profileInputStyle}
+            />
+            <TextField
+              label="New Password"
+              type="password"
+              value={newPassword}
+              onChange={handleNewPasswordChange}
+              styles={profileInputStyle}
+            />
+            <TextField
+              label="Confirm Password"
+              type="password"
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
+              styles={profileInputStyle}
+            />
+            <DefaultButton className={savePasswordButtonClassName} text="Save" onClick={savePasswordChange} />
+          </div>
         </div>
+      </div>
     );
 };

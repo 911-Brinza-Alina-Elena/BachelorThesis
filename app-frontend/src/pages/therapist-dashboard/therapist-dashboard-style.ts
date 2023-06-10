@@ -21,7 +21,6 @@ export const patientsDivClassName = mergeStyles({
     boxShadow: "0px 0px 10px 1px rgba(0,0,0,0.25)",
     alignItems: "center",
     overflowY: "auto",
-    cursor: "pointer",
 });
 
 export const addButtonClassName = mergeStyles({
@@ -43,6 +42,7 @@ export const patientDivClassName = mergeStyles({
     backgroundColor: WHITE_COLOR,
     justifyContent: "space-between",
     boxShadow: "0px 0px 10px 1px rgba(0,0,0,0.15)",
+    cursor: "pointer",
 });
 
 export const patientPersonaClassName = mergeStyles({
