@@ -1,5 +1,5 @@
-import { ITextFieldStyles, mergeStyles } from "@fluentui/react";
-import { ANGER_COLOR, BUTTON_COLOR, FONT_FAMILY, LOGIN_REGISTER_COLOR, WHITE_COLOR } from "../../constants";
+import { IDialogStyles, ITextFieldStyles, mergeStyles } from "@fluentui/react";
+import { ANGER_COLOR, BLACK_COLOR, BUTTON_COLOR, FONT_FAMILY, LOGIN_REGISTER_COLOR, PEACH_COLOR, WHITE_COLOR } from "../../constants";
 
 export const viewJournalClassName = mergeStyles({
     backgroundColor: LOGIN_REGISTER_COLOR,
@@ -146,4 +146,37 @@ export const editInputClassName = mergeStyles({
     justifyContent: "space-evenly",
     alignItems: "center",
     fontFamily: FONT_FAMILY
+});
+
+export const confirmationsClassName = mergeStyles({
+    fontFamily: FONT_FAMILY,
+});
+
+export const cofirmationStyle: Partial<IDialogStyles> = {
+    root: {
+        selectors: {
+            ".ms-Dialog-title": {
+                fontFamily: FONT_FAMILY,
+            },
+            ".ms-Dialog-subText": {
+                fontFamily: FONT_FAMILY,
+            }
+        }
+    }
+};
+
+export const confirmationDeleteButtonClassName = mergeStyles({
+    backgroundColor: PEACH_COLOR,
+    borderRadius: "25px",
+    border: "none",
+    fontFamily: FONT_FAMILY,
+    color: WHITE_COLOR
+});
+
+export const confirmationCancelButtonClassName = mergeStyles({
+    backgroundColor: WHITE_COLOR,
+    borderRadius: "25px",
+    border: "1px solid " + PEACH_COLOR,
+    fontFamily: FONT_FAMILY,
+    color: PEACH_COLOR
 });

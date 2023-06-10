@@ -29,7 +29,6 @@ export const PatientPage = () => {
         const patient_id = parseInt(id!);
         getTherapistPatient(token!, patient_id).then((response) => {
             setPatient(response);
-            getAndSetAvailableDates();
         }).catch((error) => {
             console.log(error);
             alert(error);
@@ -38,6 +37,7 @@ export const PatientPage = () => {
 
     useEffect(() => {
         if (patient) {
+            getAndSetAvailableDates();
             createEmotionsPieChart();
         }
     }, [patient]);
@@ -54,6 +54,7 @@ export const PatientPage = () => {
                         text: dateStr};
             });
             setAvailableDates(dropdownOptions);
+            console.log(dropdownOptions);
         }
     };
 

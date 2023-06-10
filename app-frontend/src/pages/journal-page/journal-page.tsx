@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ANGER_COLOR, FEAR_COLOR, JOY_COLOR, LOVE_COLOR, SADNESS_COLOR, SURPRISE_COLOR } from "../../constants";
 import { Journal } from "../../models/journal";
 import { deleteJournal, getJournal, updateJournal } from "../../services/api-service";
-import { buttonsClassName, cancelButtonClassName, deleteButtonClassName, editButtonClassName, editButtonsClassName, editInputClassName, editTitleInputStyle, editJournalClassName, saveButtonClassName, viewJournalClassName, editContentInputStyle } from "./journal-page-style";
+import { buttonsClassName, cancelButtonClassName, deleteButtonClassName, editButtonClassName, editButtonsClassName, editInputClassName, editTitleInputStyle, editJournalClassName, saveButtonClassName, viewJournalClassName, editContentInputStyle, confirmationsClassName, cofirmationStyle, confirmationDeleteButtonClassName, confirmationCancelButtonClassName } from "./journal-page-style";
 
 export const JournalPage = () => {
     const navigate = useNavigate();
@@ -107,14 +107,14 @@ export const JournalPage = () => {
         {editing ? (
           <div className={editJournalClassName}>
             <TextField
-            className={editInputClassName}
+              className={editInputClassName}
               label="Title"
               value={journal?.entry_title}
               onChange={onChangeTitle}
               styles={editTitleInputStyle}
             />
             <TextField
-                className={editInputClassName}
+              className={editInputClassName}
               label="Content"
               multiline
               rows={10}
@@ -159,17 +159,27 @@ export const JournalPage = () => {
           </div>
         )}
         <Dialog
+          modalProps={{
+            className: confirmationsClassName,
+          }}
           hidden={!confirmDelete}
           onDismiss={() => setConfirmDelete(false)}
           dialogContentProps={{
             type: DialogType.normal,
             title: "Confirm Delete",
             subText: "Are you sure you want to delete this journal entry?",
+            className: confirmationsClassName,
           }}
+          styles={cofirmationStyle}
         >
           <DialogFooter>
-            <PrimaryButton text="Delete" onClick={handleDelete} />
+            <PrimaryButton
+              className={confirmationDeleteButtonClassName}
+              text="Delete"
+              onClick={handleDelete}
+            />
             <DefaultButton
+              className={confirmationCancelButtonClassName}
               text="Cancel"
               onClick={() => setConfirmDelete(false)}
             />

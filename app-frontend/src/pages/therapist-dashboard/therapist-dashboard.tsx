@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import User from "../../models/user";
 import { addPatient, deletePatient, getTherapistPatients } from "../../services/api-service";
 import { get } from "http";
+import { addButtonClassName, deleteIconClassName, patientDivClassName, patientPersonaClassName, patientsDivClassName, therapistDashboardMainDivClassName } from "./therapist-dashboard-style";
 
 // page for when the therapist logs in
 export const TherapistDashboard = () => {
@@ -59,22 +60,24 @@ export const TherapistDashboard = () => {
 
     const renderPatientItem = (patient?: User) => {
         return (
-          <div style={{display:'flex', flexDirection:'row'}}>
+          <div className={patientDivClassName}>
             <Persona
+              className={patientPersonaClassName}
               text={`${patient?.first_name} ${patient?.last_name}`}
               secondaryText={`Email: ${patient?.email}`}
               size={PersonaSize.size72}
               onClick={() => handlePatientClick(patient?.id!)}
             />
             <IconButton
-                iconProps={{ iconName: "Delete" }}
-                title="Delete"
-                ariaLabel="Delete"
-                onClick={() => {
-                    setDeletePatientId(patient?.id!);
-                    setConfirmDelete(true);}}
+              className={deleteIconClassName}
+              iconProps={{ iconName: "Delete" }}
+              title="Delete"
+              ariaLabel="Delete"
+              onClick={() => {
+                setDeletePatientId(patient?.id!);
+                setConfirmDelete(true);
+              }}
             />
-            
           </div>
         );
     };
@@ -105,11 +108,14 @@ export const TherapistDashboard = () => {
     };
 
     return (
-        <div>
+        <div className={therapistDashboardMainDivClassName}>
             <h1>Therapist Dashboard</h1>
-            <h2>Patients</h2>
-            <List items={patients} onRenderCell={(item) => renderPatientItem(item)} />
+            <div className={patientsDivClassName}>
+                <h2>Patients</h2>
+                <List items={patients} onRenderCell={(item) => renderPatientItem(item)} />
+            </div>
             <DefaultButton
+                className={addButtonClassName}
                 text="Add patient"
                 iconProps={{ iconName: "Add" }}
                     onClick={handleAddPatientClick} />
