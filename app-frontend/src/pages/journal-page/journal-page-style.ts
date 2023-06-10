@@ -157,11 +157,15 @@ export const cofirmationStyle: Partial<IDialogStyles> = {
         selectors: {
             ".ms-Dialog-title": {
                 fontFamily: FONT_FAMILY,
+                marginTop: "10px",
             },
             ".ms-Dialog-subText": {
                 fontFamily: FONT_FAMILY,
             }
         }
+    },
+    main: {
+        borderRadius: "10px",
     }
 };
 

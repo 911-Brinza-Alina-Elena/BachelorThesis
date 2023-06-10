@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import User from "../../models/user";
 import { addPatient, deletePatient, getTherapistPatients } from "../../services/api-service";
 import { get } from "http";
-import { addButtonClassName, deleteIconClassName, patientDivClassName, patientPersonaClassName, patientsDivClassName, therapistDashboardMainDivClassName } from "./therapist-dashboard-style";
+import { addButtonClassName, addDialogButtonClassName, addDialogStyle, cancelDialogButtonClassName, cofirmationStyle, confirmationCancelButtonClassName, confirmationDeleteButtonClassName, deleteIconClassName, editEmailInputStyle, patientDivClassName, patientPersonaClassName, patientsDivClassName, therapistDashboardMainDivClassName } from "./therapist-dashboard-style";
 
 // page for when the therapist logs in
 export const TherapistDashboard = () => {
@@ -108,56 +108,76 @@ export const TherapistDashboard = () => {
     };
 
     return (
-        <div className={therapistDashboardMainDivClassName}>
-            <h1>Therapist Dashboard</h1>
-            <div className={patientsDivClassName}>
-                <h2>Patients</h2>
-                <List items={patients} onRenderCell={(item) => renderPatientItem(item)} />
-            </div>
-            <DefaultButton
-                className={addButtonClassName}
-                text="Add patient"
-                iconProps={{ iconName: "Add" }}
-                    onClick={handleAddPatientClick} />
-            <Dialog
-                hidden={!addPatientDialogOpen}
-                onDismiss={handleAddPatientDialogClose}
-                dialogContentProps={{
-                    type: DialogType.normal,
-                    title: "Add Patient",
-                    subText: "Enter the email of the patient you want to add.",
-                }}
-                modalProps={{
-                    isBlocking: true,
-                }}
-            >
-                <TextField
-                    label="Email"
-                    value={newPatientEmail}
-                    onChange={(event, newValue) => setNewPatientEmail(newValue!)}
-                />
-                <DialogFooter>
-                    <PrimaryButton text="Add" onClick={handleAddPatientDialogSubmit} />
-                    <DefaultButton text="Cancel" onClick={handleAddPatientDialogClose} />
-                </DialogFooter>
-            </Dialog>
-            <Dialog
-              hidden={!confirmDelete}
-              onDismiss={() => setConfirmDelete(false)}
-              dialogContentProps={{
-                type: DialogType.normal,
-                title: "Confirm Delete",
-                subText: "Are you sure you want to delete this patient?",
-              }}
-            >
-              <DialogFooter>
-                <PrimaryButton text="Delete" onClick={() =>handleDeletePatient(deletePatientId!)} />
-                <DefaultButton
-                  text="Cancel"
-                  onClick={handleDeletePatientDialogClose}
-                />
-              </DialogFooter>
-            </Dialog>
+      <div className={therapistDashboardMainDivClassName}>
+        <h1>Therapist Dashboard</h1>
+        <div className={patientsDivClassName}>
+          <h2>Patients</h2>
+          <List
+            items={patients}
+            onRenderCell={(item) => renderPatientItem(item)}
+          />
         </div>
+        <DefaultButton
+          className={addButtonClassName}
+          text="Add patient"
+          iconProps={{ iconName: "Add" }}
+          onClick={handleAddPatientClick}
+        />
+        <Dialog
+          hidden={!addPatientDialogOpen}
+          onDismiss={handleAddPatientDialogClose}
+          dialogContentProps={{
+            type: DialogType.normal,
+            title: "Add Patient",
+            subText: "Enter the email of the patient you want to add.",
+          }}
+          modalProps={{
+            isBlocking: true,
+          }}
+          styles={addDialogStyle}
+        >
+          <TextField
+            label="Email"
+            value={newPatientEmail}
+            onChange={(event, newValue) => setNewPatientEmail(newValue!)}
+            styles={editEmailInputStyle}
+          />
+          <DialogFooter>
+            <PrimaryButton
+              className={addDialogButtonClassName}
+              text="Add"
+              onClick={handleAddPatientDialogSubmit}
+            />
+            <DefaultButton
+              className={cancelDialogButtonClassName}
+              text="Cancel"
+              onClick={handleAddPatientDialogClose}
+            />
+          </DialogFooter>
+        </Dialog>
+        <Dialog
+          hidden={!confirmDelete}
+          onDismiss={() => setConfirmDelete(false)}
+          dialogContentProps={{
+            type: DialogType.normal,
+            title: "Confirm Delete",
+            subText: "Are you sure you want to delete this patient?",
+          }}
+          styles={cofirmationStyle}
+        >
+          <DialogFooter>
+            <PrimaryButton
+              className={confirmationDeleteButtonClassName}
+              text="Delete"
+              onClick={() => handleDeletePatient(deletePatientId!)}
+            />
+            <DefaultButton
+              className={confirmationCancelButtonClassName}
+              text="Cancel"
+              onClick={handleDeletePatientDialogClose}
+            />
+          </DialogFooter>
+        </Dialog>
+      </div>
     );
 };
