@@ -3,6 +3,7 @@ import random
 import string
 from datetime import timedelta
 
+BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', None)
@@ -19,4 +20,12 @@ class Config:
     DB_HOST = os.getenv('DB_HOST')
     DB_PORT = os.getenv('DB_PORT')
     DB_NAME = os.getenv('DB_NAME')
-    SQLALCHEMY_DATABASE_URI = f'{DB_ENGINE}://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+    USE_SQLITE = True
+    if DB_ENGINE and DB_NAME and DB_USERNAME:
+        try:
+            SQLALCHEMY_DATABASE_URI = f'{DB_ENGINE}://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+            USE_SQLITE = False
+        except Exception as e:
+            print(e)
+    if USE_SQLITE:
+        SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')

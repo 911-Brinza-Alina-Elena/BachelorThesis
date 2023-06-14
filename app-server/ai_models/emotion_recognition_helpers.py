@@ -3,27 +3,27 @@ import re
 import string
 import torch
 import joblib
-import numpy as np
-from sklearn.svm import SVC
+import contractions
 
 class EmotionRecognition:
     def __init__(self):
-        self.tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
-        self.bert_model = DistilBertModel.from_pretrained('distilbert-base-uncased')
-        self.svm_model = joblib.load('ai_models/model-1.pkl')
-        self.emotions = ['anger', 'fear', 'joy', 'love', 'sadness', 'surprise']
+        self.tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-cased')
+        self.bert_model = DistilBertModel.from_pretrained('distilbert-base-cased')
+        self.svm_model = joblib.load('ai_models/model-4.pkl')
+        self.emotions = ['sadness', 'joy', 'love', 'anger', 'fear', 'surprise']
 
     def preprocess_text(self, text):
         text = re.sub(r"http\S+|www\S+|https\S+", "", text)
-        # remove html tags
-        text = re.sub(r'<.*?>', '', text)
+        # remove words like href, img, www, http, width, height, src
+        text = re.sub(r"\S*(href|img|www|http|width|height|src)\S*", "", text)
+        # remove contractions
+        text = contractions.fix(text)
         # remove special characters
         text = text.translate(str.maketrans('', '', string.punctuation))
-        # tokenize text
-        tokens = self.tokenizer.tokenize(text)
+
         encoded_input = self.tokenizer.encode_plus(
-            tokens,
-            add_special_tokens=True,
+            text,
+            add_special_tokens=False,
             max_length=512,
             padding='max_length',
             truncation=True,

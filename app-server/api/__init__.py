@@ -1,4 +1,5 @@
 import json
+import os.path
 
 from flask_cors import CORS
 from flask import Flask
@@ -19,6 +20,10 @@ def initialize_database():
         db.create_all()
     except Exception as e:
         print(e)
+        # Fall back to sqlite
+        BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+        db.create_all()
 
 @app.after_request
 def after_request(response):
