@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e087fff6-c976-44c1-ac75-c7b62ac2d43f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ai_models/model-7-over.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai_models/emotion_recognition_helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/ai_models/emotion_recognition_helpers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai_models/model-1.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/ai_models/model-4.pkl" afterDir="false" />
-    </list>
+    <list default="true" id="e087fff6-c976-44c1-ac75-c7b62ac2d43f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -154,6 +149,7 @@
       <workItem from="1686684250904" duration="3466000" />
       <workItem from="1686693825336" duration="752000" />
       <workItem from="1686696153137" duration="641000" />
+      <workItem from="1686781400870" duration="1974000" />
     </task>
     <servers />
   </component>
@@ -173,6 +169,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/app_server$app.coverage" NAME="app Coverage Results" MODIFIED="1683664691173" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/app_server$app_server.coverage" NAME="app-server Coverage Results" MODIFIED="1686696180200" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/app_server$app_server.coverage" NAME="app-server Coverage Results" MODIFIED="1686782374075" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
