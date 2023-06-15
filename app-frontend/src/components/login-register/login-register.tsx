@@ -295,7 +295,7 @@ export const LoginRegisterComponent = () => {
       {!isRegister ? (
         <div className={loginRegisterClassName}>
           <img
-            src="/—Pngtree—mental health problems flat illustration_6855451.png"
+            src="/Pngtree-mental-health-problems_flat_illustration_6855451.png"
             alt="Therapy session illustration"
             className={loginIconClassName}
           />
